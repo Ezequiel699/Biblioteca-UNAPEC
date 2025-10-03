@@ -1,0 +1,17 @@
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\bin\Debug\net8.0\Unapec.Biblioteca.Infrastructure.deps.json
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\bin\Debug\net8.0\Unapec.Biblioteca.Infrastructure.runtimeconfig.json
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\bin\Debug\net8.0\Unapec.Biblioteca.Infrastructure.dll
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\bin\Debug\net8.0\Unapec.Biblioteca.Infrastructure.pdb
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\bin\Debug\net8.0\Unapec.Biblioteca.Core.dll
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\bin\Debug\net8.0\Unapec.Biblioteca.Core.pdb
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.AssemblyInfo.cs
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.B.20503621.Up2Date
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.dll
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\refint\Unapec.Biblioteca.Infrastructure.dll
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.pdb
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\Unapec.Biblioteca.Infrastructure.genruntimeconfig.cache
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Infrastructure\obj\Debug\net8.0\ref\Unapec.Biblioteca.Infrastructure.dll

@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ezequ\\Unapec.Biblioteca\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E9889DB7-237B-47AA-88BD-ED8B3B1FA839}|Unapec.Biblioteca.Api\\Unapec.Biblioteca.Api.csproj|c:\\users\\ezequ\\unapec.biblioteca\\unapec.biblioteca.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9889DB7-237B-47AA-88BD-ED8B3B1FA839}|Unapec.Biblioteca.Api\\Unapec.Biblioteca.Api.csproj|solutionrelative:unapec.biblioteca.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D544631A-550D-4160-8211-B24152F1785A}|Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj|c:\\users\\ezequ\\unapec.biblioteca\\unapec.biblioteca.infrastructure\\data\\bibliotecadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D544631A-550D-4160-8211-B24152F1785A}|Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj|solutionrelative:unapec.biblioteca.infrastructure\\data\\bibliotecadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9889DB7-237B-47AA-88BD-ED8B3B1FA839}|Unapec.Biblioteca.Api\\Unapec.Biblioteca.Api.csproj|c:\\users\\ezequ\\unapec.biblioteca\\unapec.biblioteca.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E9889DB7-237B-47AA-88BD-ED8B3B1FA839}|Unapec.Biblioteca.Api\\Unapec.Biblioteca.Api.csproj|solutionrelative:unapec.biblioteca.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F44F3F-0AFD-426C-B1B8-3731D3D4BAD5}|Unapec.Biblioteca.Core\\Unapec.Biblioteca.Core.csproj|c:\\users\\ezequ\\unapec.biblioteca\\unapec.biblioteca.core\\unapec.biblioteca.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A1F44F3F-0AFD-426C-B1B8-3731D3D4BAD5}|Unapec.Biblioteca.Core\\Unapec.Biblioteca.Core.csproj|solutionrelative:unapec.biblioteca.core\\unapec.biblioteca.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D544631A-550D-4160-8211-B24152F1785A}|Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj|c:\\users\\ezequ\\unapec.biblioteca\\unapec.biblioteca.infrastructure\\unapec.biblioteca.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D544631A-550D-4160-8211-B24152F1785A}|Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj|solutionrelative:unapec.biblioteca.infrastructure\\unapec.biblioteca.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Unapec.Biblioteca.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Api\\Program.cs",
+              "RelativeToolTip": "Unapec.Biblioteca.Api\\Program.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAAAKYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-02T19:46:59.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "Unapec.Biblioteca.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Api\\appsettings.json",
+              "RelativeToolTip": "Unapec.Biblioteca.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-02T19:46:29.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BibliotecaDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Infrastructure\\Data\\BibliotecaDbContext.cs",
+              "RelativeDocumentMoniker": "Unapec.Biblioteca.Infrastructure\\Data\\BibliotecaDbContext.cs",
+              "ToolTip": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Infrastructure\\Data\\BibliotecaDbContext.cs",
+              "RelativeToolTip": "Unapec.Biblioteca.Infrastructure\\Data\\BibliotecaDbContext.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA3wBcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-02T19:28:55.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Unapec.Biblioteca.Infrastructure",
+              "DocumentMoniker": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj",
+              "RelativeToolTip": "Unapec.Biblioteca.Infrastructure\\Unapec.Biblioteca.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-02T19:28:21.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Unapec.Biblioteca.Core",
+              "DocumentMoniker": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Core\\Unapec.Biblioteca.Core.csproj",
+              "RelativeDocumentMoniker": "Unapec.Biblioteca.Core\\Unapec.Biblioteca.Core.csproj",
+              "ToolTip": "C:\\Users\\ezequ\\Unapec.Biblioteca\\Unapec.Biblioteca.Core\\Unapec.Biblioteca.Core.csproj",
+              "RelativeToolTip": "Unapec.Biblioteca.Core\\Unapec.Biblioteca.Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-02T19:23:35.749Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

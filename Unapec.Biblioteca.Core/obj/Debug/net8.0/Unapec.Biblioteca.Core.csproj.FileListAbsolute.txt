@@ -1,0 +1,12 @@
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\bin\Debug\net8.0\Unapec.Biblioteca.Core.deps.json
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\bin\Debug\net8.0\Unapec.Biblioteca.Core.dll
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\bin\Debug\net8.0\Unapec.Biblioteca.Core.pdb
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\Unapec.Biblioteca.Core.csproj.AssemblyReference.cache
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\Unapec.Biblioteca.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\Unapec.Biblioteca.Core.AssemblyInfoInputs.cache
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\Unapec.Biblioteca.Core.AssemblyInfo.cs
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\Unapec.Biblioteca.Core.csproj.CoreCompileInputs.cache
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\Unapec.Biblioteca.Core.dll
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\refint\Unapec.Biblioteca.Core.dll
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\Unapec.Biblioteca.Core.pdb
+C:\Users\ezequ\Unapec.Biblioteca\Unapec.Biblioteca.Core\obj\Debug\net8.0\ref\Unapec.Biblioteca.Core.dll
