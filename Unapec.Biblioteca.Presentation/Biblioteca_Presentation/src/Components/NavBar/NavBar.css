@@ -32,8 +32,8 @@
     padding: 10px 20px;
 }
 .navbar-option a:hover{
-    background-color: rgba(216, 225, 232, 0.701);
+    background-color: rgba(200, 211, 219, 0.701);
 }
 .navbar-option a:active{
-    background-color: rgba(171, 178, 182, 0.701);
+    background-color: rgba(216, 225, 232, 0.701);
 }
