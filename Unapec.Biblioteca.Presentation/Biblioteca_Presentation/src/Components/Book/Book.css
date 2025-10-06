@@ -1,0 +1,56 @@
+.book{
+    margin: 8px;
+    justify-content: center;
+}
+
+.book-cover-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-cover{
+    width: 200px;
+    height: auto;
+    border-radius: 0.75rem;
+}
+
+.book-overlay{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: absolute;
+    background: rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0);
+
+}
+
+.book-overlay:hover{
+    color: white;
+    background: rgba(0, 0, 0, 0.496);
+
+}
+
+.btn-container{
+    display: flex;
+    flex-direction: column;
+    margin: 30px 18px;
+}
+
+.overlay-btn{
+    color: inherit;
+    border-bottom: inherit;
+    border-bottom: 3px rgba(255, 255, 255, 0) solid;
+
+}
+.overlay-btn:hover{
+    border-bottom: 3px white solid;
+}
+.title-container{
+    display: flex;
+    justify-content: center;
+}

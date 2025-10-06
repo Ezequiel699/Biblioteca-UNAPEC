@@ -1,14 +1,13 @@
 
 import './App.css'
 import NavBar from './Components/NavBar/NavBar'
-import Footer from './Components/Footer/Footer'
-
+import BookSection from './Components/Book/BookSection'
 function App() {
 
   return (
     <>
       <NavBar></NavBar>
-      <Footer></Footer>
+      <BookSection>Seguir Leyendo</BookSection>
     </>
   )
 }

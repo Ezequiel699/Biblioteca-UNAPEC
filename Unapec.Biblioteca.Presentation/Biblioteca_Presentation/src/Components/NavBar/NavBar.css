@@ -1,5 +1,5 @@
 .header{
-    padding: 2rem clamp(1rem, 4.2vw, 6rem);
+    padding: 2rem clamp(1rem, 4.2vw, 5rem);
     display: flex;
     align-items: center;
 }
@@ -23,7 +23,7 @@
 
 .navbar-option{
     list-style: none;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
 }
 
 .navbar-option a{
