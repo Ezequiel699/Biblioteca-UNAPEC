@@ -1,0 +1,20 @@
+.Bibliographics-container{
+    border: 3px blue solid;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem;
+}
+
+.cover-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Cambia center por flex-start */
+    align-items: flex-end;
+    gap: 1rem; /* El espacio entre cards */
+}

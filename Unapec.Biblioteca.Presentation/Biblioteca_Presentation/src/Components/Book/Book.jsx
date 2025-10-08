@@ -14,7 +14,6 @@ const Book = ({book}) =>{
                         <button type='button' className='overlay-btn'>more info</button>
                     </div>
                 </div> 
-
             </div>
             <div className='title-container'>
                 <h3>{book.title}</h3>

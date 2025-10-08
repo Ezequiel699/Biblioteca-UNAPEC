@@ -1,13 +1,13 @@
 
 import './App.css'
 import NavBar from './Components/NavBar/NavBar'
-import BookSection from './Components/Book/BookSection'
+import Bibliografias from './Components/Gestion/Bibliografias/Bibliografias'
 function App() {
 
   return (
     <>
       <NavBar></NavBar>
-      <BookSection>Seguir Leyendo</BookSection>
+      <Bibliografias></Bibliografias>
     </>
   )
 }

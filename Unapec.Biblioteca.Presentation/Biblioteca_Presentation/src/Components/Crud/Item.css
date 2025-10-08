@@ -1,22 +1,24 @@
-.book{
+.item{
     margin: 8px;
+    margin-left: 21px;
     justify-content: center;
+    width: 9.38rem;
 }
 
-.book-cover-container{
+.item-cover-container{
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.book-cover{
-    width: 200px;
+.item-cover{
+    width: 100%;
     height: auto;
     border-radius: 0.75rem;
 }
 
-.book-overlay{
+.item-overlay{
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -29,7 +31,7 @@
 
 }
 
-.book-overlay:hover{
+.item-overlay:hover{
     color: white;
     background: rgba(0, 0, 0, 0.496);
 }
@@ -57,8 +59,3 @@
 }
 
 
-.title-container h3{
-    text-align: center;
-    word-wrap: break-word;
-    max-width: 200px; /* mismo ancho que .book-cover */
-}

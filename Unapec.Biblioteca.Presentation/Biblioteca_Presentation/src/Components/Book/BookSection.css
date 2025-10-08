@@ -1,9 +1,4 @@
 
-
-
-.book-section-container{
-
-}
 .book-section{
     display: flex;
 }
@@ -12,5 +7,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
 }

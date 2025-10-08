@@ -1,0 +1,20 @@
+.carrusel-container{
+    border: 3px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container{
+    border: 3px solid rgb(0, 64, 255);
+    width: 60px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.books-container{
+    border: 3px solid rgb(0, 255, 72);
+    flex: 1;
+}
