@@ -1,0 +1,22 @@
+/*App.css*/
+.page-container{
+    display: grid;
+    grid-template-rows: 1fr 6fr;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    "header"
+    "content";
+    height: 100vh;
+}
+
+.bibliografias{
+    grid-area: content;
+    width: 100%;
+
+}
+.header{
+    padding: 2rem 3rem;
+    grid-area: header;
+
+}
+

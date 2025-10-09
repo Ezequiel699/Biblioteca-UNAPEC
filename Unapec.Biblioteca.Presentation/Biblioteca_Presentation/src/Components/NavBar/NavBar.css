@@ -1,9 +1,9 @@
 .header{
-    padding: 2rem clamp(1rem, 4.2vw, 5rem);
+}
+
+.navbar-container{
     display: flex;
     align-items: center;
-    border: 3px solid red;
-    width: 100vw;
 }
 
 .profile-picture{
@@ -20,7 +20,7 @@
 .navbar-list{
     display: flex ;
     font-size: 1rem;
-    gap: clamp(0.5rem, 3vw, 4rem);
+    gap: clamp(0.5rem, 1.5vw, 4rem);
 }
 
 .navbar-option{
@@ -34,8 +34,13 @@
     padding: clamp(.5rem, 12vw, .7rem) clamp(.6rem, 2vw, 1.25rem);
 }
 .navbar-option a:hover{
-    background-color: rgba(200, 211, 219, 0.701);
+    background-color: rgba(200, 208, 219, 0.384);
 }
 .navbar-option a:active{
-    background-color: rgba(216, 225, 232, 0.701);
+    scale: 0.97;
+}
+
+.bar{
+    margin-top: .5rem;
+    border: 1px inset rgba(152, 152, 152, 0.426);
 }

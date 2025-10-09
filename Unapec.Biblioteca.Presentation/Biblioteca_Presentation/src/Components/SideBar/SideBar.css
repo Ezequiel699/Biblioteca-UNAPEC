@@ -1,0 +1,35 @@
+/*Sidebar.css*/
+
+.sidebar{
+    padding: 30px ;
+}
+
+.sidebar-container{
+    display: flex;
+    flex-flow: column wrap;
+}
+.title-container{
+    text-align: center;
+}
+
+.title-container{
+    margin-bottom: 30px;
+}
+
+.title-container h2{
+    margin: 0;
+    padding: 0;
+}
+
+.option{
+    border-radius: 2rem;
+    padding: .25rem .5rem;
+    text-align: center;
+}
+
+.option:hover{
+    background: rgba(204, 206, 221, 0.47);
+}
+.option:active{
+    scale: .95;
+}

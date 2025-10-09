@@ -1,0 +1,86 @@
+.home {
+  grid-area: content;
+  place-self: start center;
+  padding: 2rem;
+  max-width: 900px;
+  width: 100%;
+}
+
+.home__title {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(135deg, #08144a 0%, #10031c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.home__sub {
+  text-align: center;
+  margin: 0 0 2.5rem;
+  color: #a0aec0;
+}
+
+.home__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.home__card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Efecto de brillo en hover */
+.home__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.home__card:hover::before {
+  left: 100%;
+}
+
+.home__card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.home__ico { 
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.home__name { 
+  font-size: 1.1rem; 
+  font-weight: 600;
+  color: #000000;
+}
+
+.home__desc { 
+  font-size: 0.9rem; 
+  color: #000000;
+}
