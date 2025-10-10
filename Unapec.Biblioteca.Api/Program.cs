@@ -9,7 +9,7 @@ using Unapec.Biblioteca.Infrastructure.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // ---- EF Core + MySQL ----
-var cs = builder.Configuration.GetConnectionString("Default")!;
+var cs = builder.Configuration.GetConnectionString("DefaultConnection")!;
 builder.Services.AddDbContext<BibliotecaDbContext>(opt =>
     opt.UseMySql(cs, new MySqlServerVersion(new Version(8, 0, 36))));
 

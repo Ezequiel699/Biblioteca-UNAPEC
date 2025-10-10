@@ -12,8 +12,8 @@ using Unapec.Biblioteca.Infrastructure.Data;
 namespace Unapec.Biblioteca.Infrastructure.Migrations
 {
     [DbContext(typeof(BibliotecaDbContext))]
-    [Migration("20251002203517_Initial")]
-    partial class Initial
+    [Migration("20251009115700_Primera")]
+    partial class Primera
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
