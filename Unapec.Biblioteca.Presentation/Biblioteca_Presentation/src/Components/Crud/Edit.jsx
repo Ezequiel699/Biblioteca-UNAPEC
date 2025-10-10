@@ -47,7 +47,7 @@ const Editar = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className='editarForm'>
-        <h2>Editar {recurso.slice(0, -1)}</h2>
+        <h2>Editar {recurso}</h2>
 
         <div className='field'>
           <label>Descripción</label>

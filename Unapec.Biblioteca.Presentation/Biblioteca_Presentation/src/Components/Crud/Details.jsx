@@ -28,7 +28,7 @@ const Detalle = () => {
 
   return (
     <div className="editarForm">
-      <h2>Detalle de {recurso.slice(0, -1)}</h2>
+      <h2>Detalle de {recurso}</h2>
 
       <div className="field">
         <label>Descripción</label>
