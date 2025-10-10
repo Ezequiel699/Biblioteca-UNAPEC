@@ -1,17 +1,60 @@
-.ciencias-container{
-    padding: 0 1rem;
+/* Wrapper principal */
+.shared-wrapper {
+    max-width: 90vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
-.title{
+/* Fila de encabezado */
+.header-row {
     display: flex;
-    justify-content: center;
-    margin: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.cover-container{
+/* Controles del encabezado */
+.header-controls {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Cambia center por flex-start */
-    align-items: flex-end;
-    gap: 1rem; /* El espacio entre cards */
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Select de filtro */
+.filter-select {
+    padding: 0.45rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background: #fff;
+    font-size: 0.875rem;
+}
+
+/* Botón de agregar */
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #10b981;
+    color: #fff;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-add:hover {
+    background: #059669;
+}
+
+/* Contenedor de la lista */
+.list-container {
+    width: 100%;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.5rem;
+    overflow: hidden;
 }

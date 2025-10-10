@@ -1,0 +1,56 @@
+.editarForm { 
+
+  max-width: 480px; 
+  margin: 2rem auto; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 1rem; 
+}
+.field { 
+  display: flex; 
+  flex-direction: column; 
+  gap: .25rem; 
+}
+.actions { 
+  display: flex; 
+  gap: 1rem; 
+  margin-top: 1rem; 
+}
+.submitBtn { 
+  padding: .5rem 1.2rem; 
+  background: #2563eb; 
+  color: #fff; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+}
+.deleteBtn { 
+  padding: .5rem 1.2rem; 
+  background: #dc2626; 
+  color: #fff; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+}
+.submitBtn:hover { 
+  background: #1d4ed8; 
+}
+.deleteBtn:hover { 
+  background: #b91c1c; 
+}
+
+/* Móviles: centrado */
+.editarForm {
+  max-width: 480px;
+  margin: 2rem auto;        /* centra horizontalmente */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Escritorio: pega a la izquierda */
+@media (min-width: 768px) {
+  .editarForm {
+    margin: 2rem 0 2rem 2rem;   /* arriba | derecha | abajo | izquierda */
+  }
+}

@@ -1,26 +1,34 @@
-import './Item.css'
+import { useNavigate } from 'react-router-dom';
+import './Item.css';
 
+const Item = ({ item, icon, recurso }) => {   // <- nuevo prop
+  const navigate = useNavigate();
 
-const Item = ({item}) =>{
-    return(
-        <div className='item'>
-            <div className='item-cover-container'>
-                <img className='item-cover' 
-                src={item.Image}
-                alt="item cover" />
-                <div className='item-overlay'>
-                    <div className='btn-container'>
-                        <a className='overlay-btn' href='https://www.youtube.com/' target='_self' rel='noreferrer'>Details</a>
-                        <a className='overlay-btn' href='https://es.wikipedia.org/wiki/Wikipedia:Portada' target='_self'>Edit</a>
-                    </div>
-                </div>
-            </div>
-            <div className='title-container'>
-                <h3>{item.Name}</h3>
-            </div>
-        </div>
+  return (
+    <div className='list-row'>
+      {icon}
+      <span className='list-title'>{item.descripcion}</span>
+      <span className='list-desc' />
+      <span className={`list-badge ${item.estado ? 'activo' : 'inactivo'}`}>
+        {item.estado ? 'Activo' : 'Inactivo'}
+      </span>
 
-    );
-}
+      <div className='list-actions'>
+        <button
+          className='btn-edit'
+          onClick={() => navigate(`/${recurso}/editar/${item.id}`)}
+        >
+          Editar
+        </button>
+        <button
+          className='btn-detail'
+          onClick={() => navigate(`/${recurso}/detalle/${item.id}`)}
+        >
+          Detalles
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default Item;
