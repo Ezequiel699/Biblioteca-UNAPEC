@@ -9,6 +9,7 @@ import Idiomas from './Components/Gestion/Idiomas/Idiomas'
 import Editar from './Components/Crud/Edit'
 import Detalle from './Components/Crud/Details'
 import Add from './Components/Crud/Add'
+import BookSection from './Components/Book/BookSection'
 
 function App() {
   return (

@@ -1,6 +1,5 @@
 
-.book-section{
-    display: flex;
+.book-section-container{
 }
 
 .book-section-title{
@@ -8,4 +7,14 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 18px;
+}
+
+.center-div{
+       
+}
+
+.book-section{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
