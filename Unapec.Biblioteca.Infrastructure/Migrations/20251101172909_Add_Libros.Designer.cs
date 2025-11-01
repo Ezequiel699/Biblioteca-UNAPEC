@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unapec.Biblioteca.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Unapec.Biblioteca.Infrastructure.Data;
 namespace Unapec.Biblioteca.Infrastructure.Migrations
 {
     [DbContext(typeof(BibliotecaDbContext))]
-    partial class BibliotecaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251101172909_Add_Libros")]
+    partial class Add_Libros
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,46 +142,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Editoras", (string)null);
-                });
-
-            modelBuilder.Entity("Unapec.Biblioteca.Core.Entities.Empleado", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Cedula")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
-
-                    b.Property<bool>("Estado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(true);
-
-                    b.Property<DateTime>("FechaIngreso")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("varchar(120)");
-
-                    b.Property<decimal>("PorcientoComision")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<string>("TandaLabor")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Empleados", (string)null);
                 });
 
             modelBuilder.Entity("Unapec.Biblioteca.Core.Entities.Idioma", b =>
@@ -309,56 +272,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TiposBibliografia", (string)null);
-                });
-
-            modelBuilder.Entity("Unapec.Biblioteca.Core.Entities.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("ActualizadoEn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Cedula")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
-
-                    b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("Estado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("NoCarnet")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("varchar(120)");
-
-                    b.Property<string>("TipoPersona")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Cedula")
-                        .IsUnique();
-
-                    b.HasIndex("NoCarnet")
-                        .IsUnique();
-
-                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("AutoresLibros", b =>
