@@ -9,7 +9,7 @@ import Idiomas from './Components/Gestion/Idiomas/Idiomas'
 import Editar from './Components/Crud/Edit'
 import Detalle from './Components/Crud/Details'
 import Add from './Components/Crud/Add'
-import BookSection from './Components/Book/BookSection'
+import Autores from './Components/Gestion/Autores/Autores'
 
 function App() {
   return (
@@ -22,9 +22,7 @@ function App() {
           <Route path="/editoras" element={<Editoras />} />
           <Route path="/ciencias" element={<Ciencias />} />
           <Route path="/idiomas" element={<Idiomas />} />
-          <Route path="/:recurso/editar/:id" element={<Editar />} />
-          <Route path="/:recurso/detalle/:id" element={<Detalle />} />
-          <Route path='/:recurso/nuevo' element={<Add />} />
+          <Route path="/autores" element={<Autores/>} />
         </Routes>
       </div>
     </BrowserRouter>

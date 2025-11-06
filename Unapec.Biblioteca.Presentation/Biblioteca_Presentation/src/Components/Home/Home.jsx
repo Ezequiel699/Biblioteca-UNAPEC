@@ -34,6 +34,30 @@ const Home = () => (
         <span className="home__name">Idiomas</span>
         <span className="home__desc">Controla traducciones e idiomas disponibles.</span>
       </Link>
+
+      <Link to="/Autores" className="home__card">
+        <span className="home__ico">✍🏻</span>
+        <span className="home__name">Autores</span>
+        <span className="home__desc">Gestiona los autores disponibles</span>
+      </Link>
+
+      <Link to="/Usuarios" className="home__card">
+        <span className="home__ico">👨🏻‍💻</span>
+        <span className="home__name">Usuarios</span>
+        <span className="home__desc">Gestiona los usuarios disponibles</span>
+      </Link>
+
+      <Link to="/Libros" className="home__card">
+        <span className="home__ico">📚</span>
+        <span className="home__name">Libros</span>
+        <span className="home__desc">Gestiona los libros disponibles</span>
+      </Link>
+
+      <Link to="/Empleados" className="home__card">
+        <span className="home__ico">📚</span>
+        <span className="home__name">Empleados</span>
+        <span className="home__desc">Gestiona los Empleados disponibles</span>
+      </Link>
     </div>
   </section>
 );
