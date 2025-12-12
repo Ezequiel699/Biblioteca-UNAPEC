@@ -1,14 +1,19 @@
 ﻿namespace Unapec.Biblioteca.Core.Entities;
 
+using System.ComponentModel.DataAnnotations;
+
 public class AppUser
 {
     public int Id { get; set; }
 
+    [Required]
     public string Nombre { get; set; } = null!;
-    public string Cedula { get; set; } = null!;
+
+    // Campo para la cédula, SI decides que NO ES NECESARIO, lo quitamos
+    // public string Cedula { get; set; } = null!; // <-- COMENTADO/ELIMINADO
 
     // Para login
-    public string UserName { get; set; } = null!;
+    [Required]
     public string PasswordHash { get; set; } = null!;
 
     // admin, empleado, usuario
@@ -19,7 +24,6 @@ public class AppUser
     public DateTime CreadoEn { get; set; } = DateTime.UtcNow;
     public DateTime? ActualizadoEn { get; set; }
 }
-
 
 public enum UserRole
 {

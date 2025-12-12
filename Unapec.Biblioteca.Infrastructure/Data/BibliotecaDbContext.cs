@@ -31,9 +31,7 @@ public class BibliotecaDbContext(DbContextOptions<BibliotecaDbContext> options) 
             e.HasKey(x => x.Id);
 
             e.Property(x => x.Nombre).IsRequired().HasMaxLength(120);
-            e.Property(x => x.Cedula).IsRequired().HasMaxLength(11);
 
-            e.Property(x => x.UserName).IsRequired().HasMaxLength(50);
             e.Property(x => x.PasswordHash).IsRequired().HasMaxLength(200);
 
             e.Property(x => x.Rol).IsRequired().HasMaxLength(20); // admin, empleado, usuario
@@ -48,8 +46,6 @@ public class BibliotecaDbContext(DbContextOptions<BibliotecaDbContext> options) 
                 .HasColumnType("datetime(6)")
                 .IsRequired(false);
 
-            e.HasIndex(x => x.UserName).IsUnique();
-            e.HasIndex(x => x.Cedula).IsUnique();
         });
 
         // ================================

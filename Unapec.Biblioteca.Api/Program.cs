@@ -36,6 +36,9 @@ Console.WriteLine($"[DB TEST] -> Server={dbg.Server}; Database={dbg.Database}; U
 builder.Services.AddDbContext<BibliotecaDbContext>(opt =>
     opt.UseMySql(cs, new MySqlServerVersion(new Version(8, 0, 36))));
 
+// ---- Agregar Controllers (Importante para que funcione el AuthController) ----
+builder.Services.AddControllers(); // <-- Añadido
+
 // ---- Swagger ----
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -98,6 +101,10 @@ app.UseCors(allowedOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 // -->>
+
+// ===== Mapear Controladores (Importante para que funcione el AuthController) =====
+app.MapControllers(); // <-- Añadido ANTES de los otros endpoints minimal API
+// ================================================================================
 
 
 // ======= Ejemplo del template (lo dejamos) =======
@@ -559,61 +566,8 @@ MapCatalog<Idioma>("idiomas");
     });
 }
 
-// ====================  AÑADIDO: ENDPOINT /api/auth/login  ====================
-// Esto usa la tabla AppUsers (DbSet<AppUser>) que agregaste al DbContext.
-// Nota: actualmente compara el valor dto.Password con AppUser.PasswordHash 1:1.
-// Recomiendo almacenar hashes (BCrypt) y verificar con BCrypt.Verify(...) en producción.
-app.MapPost("/api/auth/login", async (BibliotecaDbContext db, LoginDto dto) =>
-{
-    // buscar por username
-    var user = await db.AppUsers.FirstOrDefaultAsync(u => u.UserName == dto.UserName);
+app.Run(); // El endpoint login ya no está aquí
 
-    if (user is null)
-        return Results.Unauthorized();
-
-    // Si aún no tienes hashing, esta comparación es literal.
-    // Reemplaza por verificación de hash (BCrypt) cuando migres a contraseñas seguras.
-    if (user.PasswordHash != dto.Password)
-        return Results.Unauthorized();
-
-    // crear claims (nombre y rol)
-    var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.Nombre),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Role, user.Rol.ToString() ?? "usuario")
-    };
-
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
-    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-    var token = new JwtSecurityToken(
-        issuer: jwtIssuer,
-        audience: null,
-        claims: claims,
-        expires: DateTime.UtcNow.AddHours(3),
-        signingCredentials: creds
-    );
-
-    return Results.Ok(new
-    {
-        token = new JwtSecurityTokenHandler().WriteToken(token),
-        user = new { user.Id, user.Nombre, user.UserName, rol = user.Rol }
-    });
-})
-.WithTags("auth");
-
-
-
-app.Run();
-
-// DTO simple para login
-// DTO simple para login
-public record LoginDto(string UserName, string Password);
-
-// ===================================================================
-// ========================= RECORD del ejemplo =======================
-// ===================================================================
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
