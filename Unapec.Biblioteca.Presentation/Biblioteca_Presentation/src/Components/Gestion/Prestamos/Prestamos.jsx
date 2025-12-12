@@ -2,7 +2,7 @@
 import { FaBook, FaUser, FaPlus, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ItemList from '../../Crud/Item';
+import ItemList from './Item';
 import api from '../../../Services/api';
 import ConfirmModal from '../../Crud/ConfirmModal';
 import './Prestamos.css';
@@ -26,7 +26,7 @@ const Prestamos = () => {
     // Por ahora, el backend solo filtra por libroId o usuarioId si los pasas como query params
     // Pero como no tenemos input para eso, dejamos solo búsqueda genérica (opcional)
 
-    api.get('/api/prestamos', { params })
+    api.get('/api/Prestamos', { params })
       .then(res => {
         setPrestamos(res.data.items || []);
       })
