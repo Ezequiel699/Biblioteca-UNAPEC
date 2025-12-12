@@ -20,6 +20,9 @@ import LibrosDetalle from './Components/Gestion/Libros/LibrosDetalle'
 import BibliografiasDetail from './Components/Gestion/Bibliografias/BibliografiasDetail'
 import BibliografiasAdd from './Components/Gestion/Bibliografias/BibliografiasAdd'
 import BibliografiasEdit from './Components/Gestion/Bibliografias/BibliografiasEdit'
+import EditorasAdd from './Components/Gestion/Editoras/EditorasAdd'
+import EditorasEdit from './Components/Gestion/Editoras/EditorasEdit'
+import EditorasDetalle from './Components/Gestion/Editoras/EditorasDetalle'
 
 function App() {
   return (
@@ -38,9 +41,9 @@ function App() {
           
           {/* Editoras */}
           <Route path="/editoras" element={<Editoras />} />
-          <Route path="/editoras/nuevo" element={<Add />} />
-          <Route path="/editoras/editar/:id" element={<Editar />} />
-          <Route path="/editoras/detalle/:id" element={<Detalle />} />
+          <Route path="/editoras/nuevo" element={<EditorasAdd />} />
+          <Route path="/editoras/editar/:id" element={<EditorasEdit />} />
+          <Route path="/editoras/detalle/:id" element={<EditorasDetalle />} />
           
           {/* Ciencias */}
           <Route path="/ciencias" element={<Ciencias />} />
