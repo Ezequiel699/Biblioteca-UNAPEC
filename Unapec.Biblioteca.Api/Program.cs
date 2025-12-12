@@ -7,6 +7,14 @@ using Unapec.Biblioteca.Core.DTOs;
 using Unapec.Biblioteca.Core.Entities;
 using Unapec.Biblioteca.Infrastructure.Data;
 
+// <<-- ADICIONADOS para JWT y claims
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+// -->> 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ========= Diagnóstico: leer cadena de conexión =========
@@ -48,6 +56,32 @@ builder.Services.AddCors(options =>
     });
 });
 
+// ========= ADICIONES: JWT Authentication & Authorization =========
+// obtiene la clave desde appsettings.json: "Jwt:Key". Si no existe, usar valor por defecto.
+// -> Cambia este valor por una clave larga en producción y guárdala en secrets / env vars.
+var jwtKey = builder.Configuration["Jwt:Key"] ?? "CAMBIA_POR_UNA_CLAVE_MUY_LARGA_Y_SECRETA";
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "unapec.biblioteca";
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false, // si quieres validar issuer, cambia a true y configura ValidIssuer
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
+
+builder.Services.AddAuthorization();
+// ================================================================
+
 var app = builder.Build();
 
 // ---- Pipeline ----
@@ -59,6 +93,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors(allowedOrigins);
+
+// <<-- ADICIONADAS: activar autent y authz en pipeline
+app.UseAuthentication();
+app.UseAuthorization();
+// -->>
+
 
 // ======= Ejemplo del template (lo dejamos) =======
 var summaries = new[]
@@ -519,9 +559,61 @@ MapCatalog<Idioma>("idiomas");
     });
 }
 
+// ====================  AÑADIDO: ENDPOINT /api/auth/login  ====================
+// Esto usa la tabla AppUsers (DbSet<AppUser>) que agregaste al DbContext.
+// Nota: actualmente compara el valor dto.Password con AppUser.PasswordHash 1:1.
+// Recomiendo almacenar hashes (BCrypt) y verificar con BCrypt.Verify(...) en producción.
+app.MapPost("/api/auth/login", async (BibliotecaDbContext db, LoginDto dto) =>
+{
+    // buscar por username
+    var user = await db.AppUsers.FirstOrDefaultAsync(u => u.UserName == dto.UserName);
+
+    if (user is null)
+        return Results.Unauthorized();
+
+    // Si aún no tienes hashing, esta comparación es literal.
+    // Reemplaza por verificación de hash (BCrypt) cuando migres a contraseñas seguras.
+    if (user.PasswordHash != dto.Password)
+        return Results.Unauthorized();
+
+    // crear claims (nombre y rol)
+    var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, user.Nombre),
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Role, user.Rol ?? "usuario")
+    };
+
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+    var token = new JwtSecurityToken(
+        issuer: jwtIssuer,
+        audience: null,
+        claims: claims,
+        expires: DateTime.UtcNow.AddHours(3),
+        signingCredentials: creds
+    );
+
+    return Results.Ok(new
+    {
+        token = new JwtSecurityTokenHandler().WriteToken(token),
+        user = new { user.Id, user.Nombre, user.UserName, rol = user.Rol }
+    });
+})
+.WithTags("auth");
+
+
+
 app.Run();
 
-// ====== record del ejemplo ======
+// DTO simple para login
+// DTO simple para login
+public record LoginDto(string UserName, string Password);
+
+// ===================================================================
+// ========================= RECORD del ejemplo =======================
+// ===================================================================
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
