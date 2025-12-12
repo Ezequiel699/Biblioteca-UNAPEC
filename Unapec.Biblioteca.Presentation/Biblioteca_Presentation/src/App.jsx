@@ -25,6 +25,10 @@ import EditorasEdit from './Components/Gestion/Editoras/EditorasEdit'
 import EditorasDetalle from './Components/Gestion/Editoras/EditorasDetalle'
 import CienciasAdd from './Components/Gestion/Ciencias/CienciasAdd'
 import CienciasEdit from './Components/Gestion/Ciencias/CienciasEdit'
+import IdiomasAdd from './Components/Gestion/Idiomas/IdiomasAdd'
+import IdiomasEdit from './Components/Gestion/Idiomas/IdiomasEdit'
+import IdiomasDetalle from './Components/Gestion/Idiomas/IdiomasDetalle'
+
 
 function App() {
   return (
@@ -55,9 +59,9 @@ function App() {
           
           {/* Idiomas */}
           <Route path="/idiomas" element={<Idiomas />} />
-          <Route path="/idiomas/nuevo" element={<Add />} />
-          <Route path="/idiomas/editar/:id" element={<Editar />} />
-          <Route path="/idiomas/detalle/:id" element={<Detalle />} />
+          <Route path="/idiomas/nuevo" element={<IdiomasAdd />} />
+          <Route path="/idiomas/editar/:id" element={<IdiomasEdit />} />
+          <Route path="/idiomas/detalle/:id" element={<IdiomasDetalle />} />
           
           {/* Autores */}
           <Route path="/autores" element={<Autores />} />

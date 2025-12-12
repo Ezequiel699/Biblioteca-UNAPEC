@@ -4,25 +4,52 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ItemList from '../../Crud/Item';
 import api from '../../../Services/api';
+import ConfirmModal from '../../Crud/ConfirmModal';
 import './Idiomas.css';
 
 const Idiomas = () => {
   const [idiomas, setIdiomas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filtro, setFiltro] = useState(''); // '' todos | 'true' activos | 'false' inactivos
+  const [filtro, setFiltro] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [idEliminar, setIdEliminar] = useState(null);
+
+  const cargarIdiomas = () => {
+    setLoading(true);
+    const params = filtro === '' ? {} : { estado: filtro };
+
+    api.get('/api/idiomas', { params })
+      .then(res => setIdiomas(res.data.items || []))
+      .catch(() => setIdiomas([]))
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
-    const params = filtro === '' ? {} : { estado: filtro };
-    api.get('/api/idiomas', { params })
-      .then(res => { setIdiomas(res.data.items); setLoading(false); })
-      .catch(() => setLoading(false));
+    cargarIdiomas();
   }, [filtro]);
+
+  const pedirConfirmarEliminacion = (id) => {
+    setIdEliminar(id);
+    setModalOpen(true);
+  };
+
+  const confirmarEliminar = async () => {
+    try {
+      await api.delete(`/api/idiomas/${idEliminar}`);
+      cargarIdiomas();
+    } catch (e) {
+      console.error("Error eliminando idioma:", e);
+    }
+    setModalOpen(false);
+  };
 
   if (loading) return <p>Cargando idiomas…</p>;
 
   return (
     <div className='idiomas-container'>
       <div className='shared-wrapper'>
+
+        {/* Header */}
         <div className='header-row'>
           <h2 className='header-title'>Idiomas</h2>
 
@@ -43,17 +70,32 @@ const Idiomas = () => {
           </div>
         </div>
 
+        {/* Lista */}
         <div className='list-container'>
-          {idiomas.map(i => (
-            <ItemList
-              key={i.id}
-              item={i}
-              icon={<FaLanguage className='list-icon' />}
-              recurso='idiomas'
-            />
-          ))}
+          {idiomas.length === 0 ? (
+            <p style={{ padding: "1rem" }}>No hay idiomas registrados.</p>
+          ) : (
+            idiomas.map(i => (
+              <ItemList
+                key={i.id}
+                item={i}
+                icon={<FaLanguage className='list-icon' />}
+                recurso='idiomas'
+                displayField='descripcion'
+                onDelete={() => pedirConfirmarEliminacion(i.id)}
+              />
+            ))
+          )}
         </div>
       </div>
+
+      {/* Modal */}
+      <ConfirmModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={confirmarEliminar}
+        message="¿Realmente deseas eliminar este idioma?"
+      />
     </div>
   );
 };
