@@ -581,7 +581,7 @@ app.MapPost("/api/auth/login", async (BibliotecaDbContext db, LoginDto dto) =>
     {
         new Claim(ClaimTypes.Name, user.Nombre),
         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Role, user.Rol ?? "usuario")
+        new Claim(ClaimTypes.Role, user.Rol.ToString() ?? "usuario")
     };
 
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));

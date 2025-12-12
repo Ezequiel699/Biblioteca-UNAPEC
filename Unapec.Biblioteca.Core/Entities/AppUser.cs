@@ -12,10 +12,18 @@ public class AppUser
     public string PasswordHash { get; set; } = null!;
 
     // admin, empleado, usuario
-    public string Rol { get; set; } = "usuario";
+    public UserRole Rol { get; set; } = UserRole.usuario;
 
     public bool Estado { get; set; } = true;
 
     public DateTime CreadoEn { get; set; } = DateTime.UtcNow;
     public DateTime? ActualizadoEn { get; set; }
+}
+
+
+public enum UserRole
+{
+    admin,
+    empleado,
+    usuario
 }

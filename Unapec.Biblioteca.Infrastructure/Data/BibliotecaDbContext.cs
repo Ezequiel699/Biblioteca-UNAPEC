@@ -14,12 +14,13 @@ public class BibliotecaDbContext(DbContextOptions<BibliotecaDbContext> options) 
     public DbSet<Empleado> Empleados => Set<Empleado>();
     public DbSet<Usuario> Usuarios => Set<Usuario>();
 
-    // 👇 NUEVA TABLA PARA AUTENTICACIÓN
+    // TABLA PARA AUTENTICACIÓN
     public DbSet<AppUser> AppUsers => Set<AppUser>();
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
-        // ... (todo tu código existente)
+        // Configuraciones existentes para otras entidades...
+        // (aquí iría tu código existente para TiposBibliografia, etc., si lo tienes)
 
         // ================================
         //        APP USER (LOGIN)
@@ -50,5 +51,31 @@ public class BibliotecaDbContext(DbContextOptions<BibliotecaDbContext> options) 
             e.HasIndex(x => x.UserName).IsUnique();
             e.HasIndex(x => x.Cedula).IsUnique();
         });
+
+        // ================================
+        //     RELACIONES CON APPUSER
+        // ================================
+
+        // Relación: Usuario puede tener 0 o 1 AppUser
+        mb.Entity<Usuario>(e =>
+        {
+            e.HasOne(u => u.AppUser) // Suponiendo que tienes la propiedad de navegación 'AppUser' en Usuario
+             .WithMany()             // 'WithMany()' vacío porque AppUser no tiene una colección de Usuarios
+             .HasForeignKey(u => u.AppUserId) // La FK en Usuario es AppUserId
+             .OnDelete(DeleteBehavior.SetNull); // Si AppUser se borra, AppUserId se vuelve NULL
+        });
+
+        // Relación: Empleado puede tener 0 o 1 AppUser
+        mb.Entity<Empleado>(e =>
+        {
+            e.HasOne(emp => emp.AppUser) // Suponiendo que tienes la propiedad de navegación 'AppUser' en Empleado
+             .WithMany()                 // 'WithMany()' vacío porque AppUser no tiene una colección de Empleados
+             .HasForeignKey(emp => emp.AppUserId) // La FK en Empleado es AppUserId
+             .OnDelete(DeleteBehavior.SetNull); // Si AppUser se borra, AppUserId se vuelve NULL
+        });
+
+        // Asegúrate de que tus entidades Usuario y Empleado tengan:
+        // - Una propiedad int? AppUserId (clave foránea)
+        // - Una propiedad AppUser? AppUser (propiedad de navegación)
     }
 }

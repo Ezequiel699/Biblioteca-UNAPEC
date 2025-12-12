@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unapec.Biblioteca.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Unapec.Biblioteca.Infrastructure.Data;
 namespace Unapec.Biblioteca.Infrastructure.Migrations
 {
     [DbContext(typeof(BibliotecaDbContext))]
-    partial class BibliotecaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251212173115_deletedfield")]
+    partial class deletedfield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,9 +61,10 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<int>("Rol")
+                    b.Property<string>("Rol")
+                        .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("int");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -180,9 +184,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                     b.Property<DateTime?>("ActualizadoEn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Cedula")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -208,8 +209,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.ToTable("Empleados");
                 });
@@ -335,9 +334,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                     b.Property<DateTime?>("ActualizadoEn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Cedula")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -362,8 +358,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.ToTable("Usuarios");
                 });
 
@@ -380,16 +374,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                         .HasForeignKey("LibroId");
 
                     b.Navigation("IdiomaNativo");
-                });
-
-            modelBuilder.Entity("Unapec.Biblioteca.Core.Entities.Empleado", b =>
-                {
-                    b.HasOne("Unapec.Biblioteca.Core.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Unapec.Biblioteca.Core.Entities.Libro", b =>
@@ -425,16 +409,6 @@ namespace Unapec.Biblioteca.Infrastructure.Migrations
                     b.Navigation("Idioma");
 
                     b.Navigation("TipoBibliografia");
-                });
-
-            modelBuilder.Entity("Unapec.Biblioteca.Core.Entities.Usuario", b =>
-                {
-                    b.HasOne("Unapec.Biblioteca.Core.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Unapec.Biblioteca.Core.Entities.Libro", b =>

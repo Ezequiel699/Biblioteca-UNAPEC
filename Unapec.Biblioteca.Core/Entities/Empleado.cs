@@ -9,4 +9,10 @@ public class Empleado
     public decimal PorcientoComision { get; set; }
     public DateTime FechaIngreso { get; set; } = DateTime.UtcNow;
     public bool Estado { get; set; } = true;
+    public DateTime CreadoEn { get; set; } = DateTime.UtcNow;
+    public DateTime? ActualizadoEn { get; set; }
+
+    public int? AppUserId { get; set; }
+    public AppUser? AppUser { get; set; }
+  
 }
