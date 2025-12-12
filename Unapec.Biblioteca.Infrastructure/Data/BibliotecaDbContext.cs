@@ -13,6 +13,8 @@ public class BibliotecaDbContext(DbContextOptions<BibliotecaDbContext> options) 
     public DbSet<Libro> Libros => Set<Libro>();
     public DbSet<Empleado> Empleados => Set<Empleado>();
     public DbSet<Usuario> Usuarios => Set<Usuario>();
+    // Nuevo DbSet para la entidad Prestamo
+    public DbSet<Prestamo> Prestamos => Set<Prestamo>();
 
     // TABLA PARA AUTENTICACIÓN
     public DbSet<AppUser> AppUsers => Set<AppUser>();
@@ -21,6 +23,47 @@ public class BibliotecaDbContext(DbContextOptions<BibliotecaDbContext> options) 
     {
         // Configuraciones existentes para otras entidades...
         // (aquí iría tu código existente para TiposBibliografia, etc., si lo tienes)
+
+        // ================================
+        //        PRESTAMO (Nueva Entidad)
+        // ================================
+        mb.Entity<Prestamo>(e =>
+        {
+            e.ToTable("Prestamos"); // Nombre de la tabla en la DB
+            e.HasKey(p => p.Id); // Clave primaria
+
+            // Configurar las relaciones
+            e.HasOne(p => p.Usuario) // Un préstamo tiene un usuario
+             .WithMany()             // (Suponiendo que Usuario no tenga una lista de préstamos aquí)
+             .HasForeignKey(p => p.UsuarioId) // La FK en Prestamo
+             .OnDelete(DeleteBehavior.ClientSetNull); // Otra opción común es Restrict si usas ReferentialAction.Restrict
+
+            e.HasOne(p => p.Libro)   // Un préstamo tiene un libro
+             .WithMany()             // (Suponiendo que Libro no tenga una lista de préstamos aquí)
+             .HasForeignKey(p => p.LibroId) // La FK en Prestamo
+             .OnDelete(DeleteBehavior.ClientSetNull); // Otra opción común es Restrict
+
+            // Configurar propiedades
+            e.Property(p => p.FechaPrestamo)
+             .HasColumnType("datetime(6)")
+             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+
+            e.Property(p => p.FechaDevolucion)
+             .HasColumnType("datetime(6)")
+             .IsRequired(false); // Es nullable
+
+            e.Property(p => p.Devuelto)
+             .HasDefaultValue(false);
+
+            e.Property(p => p.CreadoEn)
+             .HasColumnType("datetime(6)")
+             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+
+            e.Property(p => p.ActualizadoEn)
+             .HasColumnType("datetime(6)")
+             .IsRequired(false);
+        });
+
 
         // ================================
         //        APP USER (LOGIN)

@@ -1,82 +1,99 @@
-﻿// Controllers/EditorasEndpoints.cs
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Unapec.Biblioteca.Core.Entities;
 using Unapec.Biblioteca.Infrastructure.Data;
 
 namespace Unapec.Biblioteca.Api.Controllers;
 
-public static class EditorasEndpoints
+[ApiController]
+[Route("api/[controller]")]
+[Authorize(Roles = "amin,empleado")]
+
+public class EditorasController : ControllerBase
 {
-    public record CreateEditoraRequest(string Descripcion, bool Estado = true);
-    public record UpdateEditoraRequest(string Descripcion, bool Estado);
+    private readonly BibliotecaDbContext _context;
 
-    public static void MapEditorasEndpoints(this WebApplication app)
+    public EditorasController(BibliotecaDbContext context)
     {
-        var group = app.MapGroup("/api/editoras").WithTags("editoras");
+        _context = context;
+    }
 
-        group.MapGet("", (BibliotecaDbContext db, int page = 1, int pageSize = 20, string? q = null, bool? estado = null) =>
-        {
-            var query = db.Editoras.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(q))
-                query = query.Where(e => e.Descripcion.Contains(q));
-            if (estado.HasValue)
-                query = query.Where(e => e.Estado == estado);
+    [HttpGet(Name = "GetEditoras")]
+    public async Task<ActionResult<object>> GetEditoras([FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery] string? q = null, [FromQuery] bool? estado = null)
+    {
+        var query = _context.Editoras.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(q))
+            query = query.Where(e => e.Descripcion.Contains(q));
+        if (estado.HasValue)
+            query = query.Where(e => e.Estado == estado);
 
-            return Results.Ok(new
-            {
-                page,
-                pageSize,
-                total = query.Count(),
-                items = query.OrderBy(e => e.Descripcion)
+        var total = query.Count();
+        var items = await query.OrderBy(e => e.Descripcion)
                              .Skip((page - 1) * pageSize)
                              .Take(pageSize)
-                             .ToList()
-            });
-        });
+                             .ToListAsync();
 
-        group.MapGet("{id:int}", async (BibliotecaDbContext db, int id) =>
-            await db.Editoras.FindAsync(id) is { } e ? Results.Ok(e) : Results.NotFound());
-
-        group.MapPost("", async (BibliotecaDbContext db, CreateEditoraRequest request) =>
+        return Ok(new
         {
-            var entity = new Editora
-            {
-                Descripcion = request.Descripcion,
-                Estado = request.Estado
-            };
-
-            db.Editoras.Add(entity);
-            await db.SaveChangesAsync();
-
-            return Results.Created($"/api/editoras/{entity.Id}", entity);
-        });
-
-        group.MapPut("{id:int}", async (BibliotecaDbContext db, int id, UpdateEditoraRequest request) =>
-        {
-            var entity = await db.Editoras.FindAsync(id);
-            if (entity == null)
-                return Results.NotFound();
-
-            entity.Descripcion = request.Descripcion;
-            entity.Estado = request.Estado;
-            entity.ActualizadoEn = DateTime.UtcNow;
-
-            await db.SaveChangesAsync();
-            return Results.NoContent();
-        });
-
-        group.MapDelete("{id:int}", async (BibliotecaDbContext db, int id) =>
-        {
-            var entity = await db.Editoras.FindAsync(id);
-            if (entity == null)
-                return Results.NotFound();
-
-            entity.Estado = false;
-            entity.ActualizadoEn = DateTime.UtcNow;
-            await db.SaveChangesAsync();
-
-            return Results.NoContent();
+            page,
+            pageSize,
+            total,
+            items
         });
     }
+
+    [HttpGet("{id:int}", Name = "GetEditoraById")]
+    public async Task<ActionResult<Editora>> GetEditora(int id)
+    {
+        var editora = await _context.Editoras.FindAsync(id);
+        if (editora is null) return NotFound();
+        return Ok(editora);
+    }
+
+    [HttpPost(Name = "CreateEditora")]
+    public async Task<ActionResult<Editora>> CreateEditora(CreateEditoraRequest request)
+    {
+        var entity = new Editora
+        {
+            Descripcion = request.Descripcion,
+            Estado = request.Estado
+        };
+
+        _context.Editoras.Add(entity);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetEditora), new { id = entity.Id }, entity);
+    }
+
+    [HttpPut("{id:int}", Name = "UpdateEditora")]
+    public async Task<IActionResult> UpdateEditora(int id, UpdateEditoraRequest request)
+    {
+        var entity = await _context.Editoras.FindAsync(id);
+        if (entity is null) return NotFound();
+
+        entity.Descripcion = request.Descripcion;
+        entity.Estado = request.Estado;
+        entity.ActualizadoEn = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}", Name = "DeleteEditora")]
+    public async Task<IActionResult> DeleteEditora(int id)
+    {
+        var entity = await _context.Editoras.FindAsync(id);
+        if (entity is null) return NotFound();
+
+        entity.Estado = false;
+        entity.ActualizadoEn = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
+
+// Records definidos fuera de la clase del controlador (o en otro archivo)
+public record CreateEditoraRequest(string Descripcion, bool Estado = true);
+public record UpdateEditoraRequest(string Descripcion, bool Estado);

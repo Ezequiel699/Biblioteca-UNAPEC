@@ -4,11 +4,12 @@ using Unapec.Biblioteca.Core.DTOs;
 using Unapec.Biblioteca.Core.Entities;
 using Unapec.Biblioteca.Infrastructure.Data;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Unapec.Biblioteca.Api.Controllers;
-
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles ="amin,empleado")]
 public class LibrosController : ControllerBase
 {
     private readonly BibliotecaDbContext _context;

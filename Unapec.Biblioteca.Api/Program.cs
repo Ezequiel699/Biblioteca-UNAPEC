@@ -106,9 +106,6 @@ app.UseAuthorization();
 app.MapControllers(); // <-- Añadido ANTES de los otros endpoints minimal API
 // ================================================================================
 
-app.MapEditorasEndpoints();
-app.MapCienciasEndpoints();
-app.MapIdiomasEndpoints();
 
 // ======= Ejemplo del template (lo dejamos) =======
 var summaries = new[]

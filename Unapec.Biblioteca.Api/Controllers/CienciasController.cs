@@ -1,83 +1,99 @@
-﻿using Unapec.Biblioteca.Api.Controllers;
-using Unapec.Biblioteca.Infrastructure.Data;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Unapec.Biblioteca.Core.Entities;
+using Unapec.Biblioteca.Infrastructure.Data;
 
 namespace Unapec.Biblioteca.Api.Controllers;
 
-public static class CienciasEndpoints
+[ApiController]
+[Route("api/[controller]")]
+[Authorize(Roles = "amin,empleado")]
+
+public class CienciasController : ControllerBase
 {
-    // Definimos los records localmente — como harías inline en Program.cs
-    public record CreateCienciaRequest(string Descripcion, bool Estado = true);
-    public record UpdateCienciaRequest(string Descripcion, bool Estado);
+    private readonly BibliotecaDbContext _context;
 
-    public static void MapCienciasEndpoints(this WebApplication app)
+    public CienciasController(BibliotecaDbContext context)
     {
-        var group = app.MapGroup("/api/ciencias").WithTags("ciencias");
+        _context = context;
+    }
 
-        group.MapGet("", (BibliotecaDbContext db, int page = 1, int pageSize = 20, string? q = null, bool? estado = null) =>
-        {
-            var query = db.Ciencias.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(q))
-                query = query.Where(c => c.Descripcion.Contains(q));
-            if (estado.HasValue)
-                query = query.Where(c => c.Estado == estado);
+    [HttpGet(Name = "GetCiencias")]
+    public async Task<ActionResult<object>> GetCiencias([FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery] string? q = null, [FromQuery] bool? estado = null)
+    {
+        var query = _context.Ciencias.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(q))
+            query = query.Where(c => c.Descripcion.Contains(q));
+        if (estado.HasValue)
+            query = query.Where(c => c.Estado == estado);
 
-            return Results.Ok(new
-            {
-                page,
-                pageSize,
-                total = query.Count(),
-                items = query.OrderBy(c => c.Descripcion)
+        var total = query.Count();
+        var items = await query.OrderBy(c => c.Descripcion)
                              .Skip((page - 1) * pageSize)
                              .Take(pageSize)
-                             .ToList()
-            });
-        });
+                             .ToListAsync();
 
-        group.MapGet("{id:int}", async (BibliotecaDbContext db, int id) =>
-            await db.Ciencias.FindAsync(id) is { } c ? Results.Ok(c) : Results.NotFound());
-
-        group.MapPost("", async (BibliotecaDbContext db, CreateCienciaRequest request) =>
+        return Ok(new
         {
-            var entity = new Ciencia
-            {
-                Descripcion = request.Descripcion,
-                Estado = request.Estado
-            };
-
-            db.Ciencias.Add(entity);
-            await db.SaveChangesAsync();
-
-            return Results.Created($"/api/ciencias/{entity.Id}", entity);
-        });
-
-        group.MapPut("{id:int}", async (BibliotecaDbContext db, int id, UpdateCienciaRequest request) =>
-        {
-            var entity = await db.Ciencias.FindAsync(id);
-            if (entity == null)
-                return Results.NotFound();
-
-            entity.Descripcion = request.Descripcion;
-            entity.Estado = request.Estado;
-            entity.ActualizadoEn = DateTime.UtcNow;
-
-            await db.SaveChangesAsync();
-            return Results.NoContent();
-        });
-
-        group.MapDelete("{id:int}", async (BibliotecaDbContext db, int id) =>
-        {
-            var entity = await db.Ciencias.FindAsync(id);
-            if (entity == null)
-                return Results.NotFound();
-
-            entity.Estado = false;
-            entity.ActualizadoEn = DateTime.UtcNow;
-            await db.SaveChangesAsync();
-
-            return Results.NoContent();
+            page,
+            pageSize,
+            total,
+            items
         });
     }
+
+    [HttpGet("{id:int}", Name = "GetCienciaById")]
+    public async Task<ActionResult<Ciencia>> GetCiencia(int id)
+    {
+        var ciencia = await _context.Ciencias.FindAsync(id);
+        if (ciencia is null) return NotFound();
+        return Ok(ciencia);
+    }
+
+    [HttpPost(Name = "CreateCiencia")]
+    public async Task<ActionResult<Ciencia>> CreateCiencia(CreateCienciaRequest request)
+    {
+        var entity = new Ciencia
+        {
+            Descripcion = request.Descripcion,
+            Estado = request.Estado
+        };
+
+        _context.Ciencias.Add(entity);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetCiencia), new { id = entity.Id }, entity);
+    }
+
+    [HttpPut("{id:int}", Name = "UpdateCiencia")]
+    public async Task<IActionResult> UpdateCiencia(int id, UpdateCienciaRequest request)
+    {
+        var entity = await _context.Ciencias.FindAsync(id);
+        if (entity is null) return NotFound();
+
+        entity.Descripcion = request.Descripcion;
+        entity.Estado = request.Estado;
+        entity.ActualizadoEn = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}", Name = "DeleteCiencia")]
+    public async Task<IActionResult> DeleteCiencia(int id)
+    {
+        var entity = await _context.Ciencias.FindAsync(id);
+        if (entity is null) return NotFound();
+
+        entity.Estado = false;
+        entity.ActualizadoEn = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
+
+// Records definidos fuera de la clase del controlador (o en otro archivo)
+public record CreateCienciaRequest(string Descripcion, bool Estado = true);
+public record UpdateCienciaRequest(string Descripcion, bool Estado);

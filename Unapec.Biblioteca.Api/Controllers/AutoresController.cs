@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Unapec.Biblioteca.Core.DTOs;
 using Unapec.Biblioteca.Core.Entities;
 using Unapec.Biblioteca.Infrastructure.Data;
-using FluentValidation;
 
 namespace Unapec.Biblioteca.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "amin,empleado")]
+
 public class AutoresController : ControllerBase
 {
     private readonly BibliotecaDbContext _context;

@@ -1,16 +1,18 @@
 ﻿// TiposBibliografiaController.cs
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Unapec.Biblioteca.Core.DTOs;
 using Unapec.Biblioteca.Core.Entities;
 using Unapec.Biblioteca.Infrastructure.Data;
-using FluentValidation;
 
 namespace Unapec.Biblioteca.Controllers;
 
 [ApiController]
 [Route("api/tipos-bibliografia")]
 [Produces("application/json")]
+[Authorize(Roles = "amin,empleado")]
 public class TiposBibliografiaController : ControllerBase
 {
     private readonly BibliotecaDbContext _db;
