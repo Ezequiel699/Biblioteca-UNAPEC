@@ -17,6 +17,9 @@ import Add from './Components/Crud/Add'
 import LibrosAdd from './Components/Gestion/Libros/LibrosAdd'
 import LibrosEditar from './Components/Gestion/Libros/LibrosEditar'
 import LibrosDetalle from './Components/Gestion/Libros/LibrosDetalle'
+import BibliografiasDetail from './Components/Gestion/Bibliografias/BibliografiasDetail'
+import BibliografiasAdd from './Components/Gestion/Bibliografias/BibliografiasAdd'
+import BibliografiasEdit from './Components/Gestion/Bibliografias/BibliografiasEdit'
 
 function App() {
   return (
@@ -29,9 +32,9 @@ function App() {
           
           {/* Tipos de Bibliografía */}
           <Route path="/tipos-bibliografia" element={<Bibliografias />} />
-          <Route path="/tipos-bibliografia/nuevo" element={<Add />} />
-          <Route path="/tipos-bibliografia/editar/:id" element={<Editar />} />
-          <Route path="/tipos-bibliografia/detalle/:id" element={<Detalle />} />
+          <Route path="/tipos-bibliografia/nuevo" element={<BibliografiasAdd />} />
+          <Route path="/tipos-bibliografia/editar/:id" element={<BibliografiasEdit />} />
+          <Route path="/tipos-bibliografia/detalle/:id" element={<BibliografiasDetail />} />
           
           {/* Editoras */}
           <Route path="/editoras" element={<Editoras />} />
