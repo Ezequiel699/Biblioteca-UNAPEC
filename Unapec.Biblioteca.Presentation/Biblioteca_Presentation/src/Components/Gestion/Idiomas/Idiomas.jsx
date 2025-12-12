@@ -1,5 +1,5 @@
 // src/components/Gestion/Idiomas/Idiomas.jsx
-import { FaLanguage, FaPlus } from 'react-icons/fa';
+import { FaLanguage, FaPlus, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ItemList from '../../Crud/Item';
@@ -11,12 +11,20 @@ const Idiomas = () => {
   const [idiomas, setIdiomas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState('');
+  const [busqueda, setBusqueda] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [idEliminar, setIdEliminar] = useState(null);
 
   const cargarIdiomas = () => {
     setLoading(true);
-    const params = filtro === '' ? {} : { estado: filtro };
+
+    const params = {
+      page: 1,
+      pageSize: 100
+    };
+    
+    if (filtro !== '') params.estado = filtro;
+    if (busqueda.trim() !== '') params.q = busqueda.trim();
 
     api.get('/api/idiomas', { params })
       .then(res => setIdiomas(res.data.items || []))
@@ -25,8 +33,13 @@ const Idiomas = () => {
   };
 
   useEffect(() => {
-    cargarIdiomas();
-  }, [filtro]);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      cargarIdiomas();
+    }, 500); // Debounce de 500ms
+
+    return () => clearTimeout(timer);
+  }, [filtro, busqueda]);
 
   const pedirConfirmarEliminacion = (id) => {
     setIdEliminar(id);
@@ -43,8 +56,6 @@ const Idiomas = () => {
     setModalOpen(false);
   };
 
-  if (loading) return <p>Cargando idiomas…</p>;
-
   return (
     <div className='idiomas-container'>
       <div className='shared-wrapper'>
@@ -54,6 +65,17 @@ const Idiomas = () => {
           <h2 className='header-title'>Idiomas</h2>
 
           <div className='header-controls'>
+            <div className='search-box'>
+              <FaSearch className='search-icon' />
+              <input
+                type='text'
+                placeholder='Buscar...'
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                className='search-input'
+              />
+            </div>
+
             <select
               value={filtro}
               onChange={e => setFiltro(e.target.value)}
@@ -72,7 +94,9 @@ const Idiomas = () => {
 
         {/* Lista */}
         <div className='list-container'>
-          {idiomas.length === 0 ? (
+          {loading ? (
+            <p style={{ padding: "1rem" }}>Cargando...</p>
+          ) : idiomas.length === 0 ? (
             <p style={{ padding: "1rem" }}>No hay idiomas registrados.</p>
           ) : (
             idiomas.map(i => (

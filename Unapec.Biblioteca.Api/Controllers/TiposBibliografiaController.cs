@@ -12,7 +12,7 @@ namespace Unapec.Biblioteca.Controllers;
 [ApiController]
 [Route("api/tipos-bibliografia")]
 [Produces("application/json")]
-[Authorize(Roles = "amin,empleado")]
+//[Authorize(Roles = "amin,empleado")]
 public class TiposBibliografiaController : ControllerBase
 {
     private readonly BibliotecaDbContext _db;

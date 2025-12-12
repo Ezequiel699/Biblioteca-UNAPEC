@@ -29,9 +29,9 @@ const LibrosAdd = () => {
   useEffect(() => {
     api.get("/api/autores").then((res) => setAutores(res.data.items || []));
     api.get("/api/editoras").then((res) => setEditoras(res.data.items || []));
-    api.get("/api/tipos-bibliografia").then((res) => setTipos(res.data.items || [])); // ✅ CORREGIDO
-    api.get("/api/idiomas").then((res) => setIdiomas(res.data.items || []));
-    api.get("/api/ciencias").then((res) => setCiencias(res.data.items || []));
+    api.get("/api/tipos-bibliografia?page=1&pageSize=100&estado=true").then((res) => setTipos(res.data.items || [])); // ✅ CORREGIDO
+    api.get("/api/idiomas?page=1&pageSize=100&estado=true").then((res) => setIdiomas(res.data.items || []));
+    api.get("/api/ciencias?page=1&pageSize=100&estado=true").then((res) => setCiencias(res.data.items || []));
   }, []);
 
   const handleChange = (e) => {

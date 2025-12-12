@@ -1,5 +1,5 @@
 // src/components/Gestion/Empleados/Empleados.jsx
-import { FaUserTie, FaPlus } from 'react-icons/fa';
+import { FaUserTie, FaPlus, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ItemList from '../../Crud/Item';
@@ -11,13 +11,20 @@ const Empleados = () => {
   const [empleados, setEmpleados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState('');
+  const [busqueda, setBusqueda] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [idEliminar, setIdEliminar] = useState(null);
 
   const cargarEmpleados = () => {
     setLoading(true);
 
-    const params = filtro === '' ? {} : { estado: filtro };
+    const params = {
+      page: 1,
+      pageSize: 100
+    };
+    
+    if (filtro !== '') params.estado = filtro;
+    if (busqueda.trim() !== '') params.q = busqueda.trim();
 
     api.get('/api/empleados', { params })
       .then(res => { 
@@ -31,8 +38,13 @@ const Empleados = () => {
   };
 
   useEffect(() => {
-    cargarEmpleados();
-  }, [filtro]);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      cargarEmpleados();
+    }, 500); // Debounce de 500ms
+
+    return () => clearTimeout(timer);
+  }, [filtro, busqueda]);
 
   // 🟢 Abrir modal y guardar el ID
   const pedirConfirmarEliminacion = (id) => {
@@ -52,8 +64,6 @@ const Empleados = () => {
     setModalOpen(false);
   };
 
-  if (loading) return <p>Cargando empleados…</p>;
-
   return (
     <div className='empleados-container'>
       <div className='shared-wrapper'>
@@ -63,6 +73,17 @@ const Empleados = () => {
           <h2 className='header-title'>Empleados</h2>
 
           <div className='header-controls'>
+            <div className='search-box'>
+              <FaSearch className='search-icon' />
+              <input
+                type='text'
+                placeholder='Buscar...'
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                className='search-input'
+              />
+            </div>
+
             <select
               value={filtro}
               onChange={e => setFiltro(e.target.value)}
@@ -81,7 +102,9 @@ const Empleados = () => {
 
         {/* Lista */}
         <div className='list-container'>
-          {empleados.length === 0 ? (
+          {loading ? (
+            <p style={{ padding: "1rem" }}>Cargando...</p>
+          ) : empleados.length === 0 ? (
             <p style={{ padding: "1rem" }}>No hay empleados registrados.</p>
           ) : (
             empleados.map(empleado => (

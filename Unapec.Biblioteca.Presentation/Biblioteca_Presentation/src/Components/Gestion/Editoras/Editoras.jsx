@@ -1,5 +1,5 @@
 // src/components/Gestion/Editoras/Editoras.jsx
-import { FaBuilding, FaPlus } from 'react-icons/fa';
+import { FaBuilding, FaPlus, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ItemList from '../../Crud/Item';
@@ -11,12 +11,20 @@ const Editoras = () => {
   const [editoras, setEditoras] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState('');
+  const [busqueda, setBusqueda] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [idEliminar, setIdEliminar] = useState(null);
 
   const cargarEditoras = () => {
     setLoading(true);
-    const params = filtro === '' ? {} : { estado: filtro };
+
+    const params = {
+      page: 1,
+      pageSize: 100
+    };
+    
+    if (filtro !== '') params.estado = filtro;
+    if (busqueda.trim() !== '') params.q = busqueda.trim();
 
     api.get('/api/editoras', { params })
       .then(res => setEditoras(res.data.items || []))
@@ -25,8 +33,13 @@ const Editoras = () => {
   };
 
   useEffect(() => {
-    cargarEditoras();
-  }, [filtro]);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      cargarEditoras();
+    }, 500); // Debounce de 500ms
+
+    return () => clearTimeout(timer);
+  }, [filtro, busqueda]);
 
   const pedirConfirmarEliminacion = (id) => {
     setIdEliminar(id);
@@ -43,8 +56,6 @@ const Editoras = () => {
     setModalOpen(false);
   };
 
-  if (loading) return <p>Cargando editoras…</p>;
-
   return (
     <div className='editoras-container'>
       <div className='shared-wrapper'>
@@ -53,6 +64,17 @@ const Editoras = () => {
           <h2 className='header-title'>Editoras</h2>
 
           <div className='header-controls'>
+            <div className='search-box'>
+              <FaSearch className='search-icon' />
+              <input
+                type='text'
+                placeholder='Buscar...'
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                className='search-input'
+              />
+            </div>
+
             <select
               value={filtro}
               onChange={e => setFiltro(e.target.value)}
@@ -70,7 +92,9 @@ const Editoras = () => {
         </div>
 
         <div className='list-container'>
-          {editoras.length === 0 ? (
+          {loading ? (
+            <p style={{ padding: "1rem" }}>Cargando...</p>
+          ) : editoras.length === 0 ? (
             <p style={{ padding: "1rem" }}>No hay editoras registradas.</p>
           ) : (
             editoras.map(e => (

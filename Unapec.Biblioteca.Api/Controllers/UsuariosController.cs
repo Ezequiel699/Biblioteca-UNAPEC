@@ -10,7 +10,7 @@ namespace Unapec.Biblioteca.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "admin,empleado")] // Corregido typo: "amin" -> "admin"
+//[Authorize(Roles = "admin,empleado")] // Corregido typo: "amin" -> "admin"
 public class UsuariosController : ControllerBase
 {
     private readonly BibliotecaDbContext _context;
