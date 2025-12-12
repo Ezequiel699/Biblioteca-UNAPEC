@@ -33,7 +33,7 @@ const LibrosEditar = () => {
   const cargarListas = async () => {
     try {
       const [tipos, editoras, ciencias, idiomas] = await Promise.all([
-        api.get("/api/tipo-bibliografia"),
+        api.get("/api/tipos-bibliografia"), // ✅ CORREGIDO: endpoint con guiones
         api.get("/api/editoras"),
         api.get("/api/ciencias"),
         api.get("/api/idiomas"),

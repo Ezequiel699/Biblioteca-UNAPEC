@@ -3,7 +3,6 @@ using Unapec.Biblioteca.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Unapec.Biblioteca.Core.Entities;
-using Unapec.Biblioteca.Infrastructure.Data;
 
 namespace Unapec.Biblioteca.Api.Controllers;
 

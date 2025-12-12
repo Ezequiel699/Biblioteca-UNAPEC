@@ -29,7 +29,7 @@ const LibrosAdd = () => {
   useEffect(() => {
     api.get("/api/autores").then((res) => setAutores(res.data.items || []));
     api.get("/api/editoras").then((res) => setEditoras(res.data.items || []));
-    api.get("/api/tiposBibliografia").then((res) => setTipos(res.data.items || []));
+    api.get("/api/tipos-bibliografia").then((res) => setTipos(res.data.items || [])); // ✅ CORREGIDO
     api.get("/api/idiomas").then((res) => setIdiomas(res.data.items || []));
     api.get("/api/ciencias").then((res) => setCiencias(res.data.items || []));
   }, []);
@@ -151,7 +151,7 @@ const LibrosAdd = () => {
             >
               <option value="">Seleccione</option>
               {editoras.map((e) => (
-                <option key={e.id} value={e.id}>{e.nombre}</option>
+                <option key={e.id} value={e.id}>{e.descripcion}</option>
               ))}
             </select>
           </div>
