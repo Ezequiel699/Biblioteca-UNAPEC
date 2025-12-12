@@ -28,6 +28,12 @@ import CienciasEdit from './Components/Gestion/Ciencias/CienciasEdit'
 import IdiomasAdd from './Components/Gestion/Idiomas/IdiomasAdd'
 import IdiomasEdit from './Components/Gestion/Idiomas/IdiomasEdit'
 import IdiomasDetalle from './Components/Gestion/Idiomas/IdiomasDetalle'
+import AutoresAdd from './Components/Gestion/Autores/AutoresAdd'
+import AutoresEdit from './Components/Gestion/Autores/AutoresEdit'
+import AutoresDetails from './Components/Gestion/Autores/AutoresDetalle'
+import UsuariosAdd from './Components/Gestion/Usuarios/UsuariosAdd'
+import UsuariosEditar from './Components/Gestion/Usuarios/UsuariosEdit'
+import UsuariosDetalle from './Components/Gestion/Usuarios/UsuariosDetalle'
 
 
 function App() {
@@ -65,15 +71,15 @@ function App() {
           
           {/* Autores */}
           <Route path="/autores" element={<Autores />} />
-          <Route path="/autores/nuevo" element={<Add />} />
-          <Route path="/autores/editar/:id" element={<Editar />} />
-          <Route path="/autores/detalle/:id" element={<Detalle />} />
+          <Route path="/autores/nuevo" element={<AutoresAdd />} />
+          <Route path="/autores/editar/:id" element={<AutoresEdit />} />
+          <Route path="/autores/detalle/:id" element={<AutoresDetails />} />
           
           {/* Usuarios */}
           <Route path="/usuarios" element={<Usuarios />} />
-          <Route path="/usuarios/nuevo" element={<Add />} />
-          <Route path="/usuarios/editar/:id" element={<Editar />} />
-          <Route path="/usuarios/detalle/:id" element={<Detalle />} />
+          <Route path="/usuarios/nuevo" element={<UsuariosAdd />} />
+          <Route path="/usuarios/editar/:id" element={<UsuariosEditar />} />
+          <Route path="/usuarios/detalle/:id" element={<UsuariosDetalle />} />
           
           {/* Libros */}
           <Route path="/libros" element={<Libros />} />

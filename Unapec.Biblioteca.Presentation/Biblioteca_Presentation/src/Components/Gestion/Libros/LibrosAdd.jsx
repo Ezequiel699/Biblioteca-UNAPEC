@@ -79,7 +79,7 @@ const LibrosAdd = () => {
       {/* HEADER */}
       <div className="detalle-header">
         <h2 className="detalle-titulo">Agregar Libro</h2>
-        <button className="btn-back" onClick={() => navigate("/libros")}>
+        <button className="btn-action btn-back" onClick={() => navigate("/libros")}>
           Volver
         </button>
       </div>
@@ -238,7 +238,7 @@ const LibrosAdd = () => {
         <div style={{ marginTop: "1.5rem", textAlign: "right" }}>
           <button
             type="button"
-            className="btn-back"
+            className="btn-action btn-back"
             onClick={() => navigate("/libros")}
             style={{ marginRight: ".75rem" }}
           >
