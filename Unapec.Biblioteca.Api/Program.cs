@@ -1,18 +1,18 @@
-using System.Reflection;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MySqlConnector;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+// <<-- ADICIONADOS para JWT y claims
+using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
+using System.Security.Claims;
+using System.Text;
+using Unapec.Biblioteca.Api.Controllers;
 using Unapec.Biblioteca.Core.DTOs;
 using Unapec.Biblioteca.Core.Entities;
 using Unapec.Biblioteca.Infrastructure.Data;
-
-// <<-- ADICIONADOS para JWT y claims
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 // -->> 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -106,6 +106,9 @@ app.UseAuthorization();
 app.MapControllers(); // <-- Añadido ANTES de los otros endpoints minimal API
 // ================================================================================
 
+app.MapEditorasEndpoints();
+app.MapCienciasEndpoints();
+app.MapIdiomasEndpoints();
 
 // ======= Ejemplo del template (lo dejamos) =======
 var summaries = new[]
@@ -127,90 +130,6 @@ app.MapGet("/weatherforecast", () =>
 .WithOpenApi();
 
 
-// ========== AUTORES ==========
-{
-    var group = app.MapGroup("/api/autores").WithTags("autores");
-
-    group.MapGet("", (BibliotecaDbContext db, int page = 1, int pageSize = 20, string? q = null, int? idiomaId = null, bool? estado = null) =>
-    {
-        var query = db.Autores
-            .Include(a => a.IdiomaNativo)
-            .AsQueryable();
-
-        if (!string.IsNullOrWhiteSpace(q)) query = query.Where(a => a.Nombre.Contains(q));
-        if (idiomaId.HasValue) query = query.Where(a => a.IdiomaNativoId == idiomaId);
-        if (estado.HasValue) query = query.Where(a => a.Estado == estado);
-
-        return Results.Ok(new
-        {
-            page,
-            pageSize,
-            total = query.Count(),
-            items = query.OrderBy(a => a.Nombre)
-                         .Skip((page - 1) * pageSize)
-                         .Take(pageSize)
-                         .ToList()
-        });
-    });
-
-    group.MapGet("{id:int}", async (BibliotecaDbContext db, int id) =>
-        await db.Autores.Include(a => a.IdiomaNativo).FirstOrDefaultAsync(a => a.Id == id)
-            is { } a ? Results.Ok(a) : Results.NotFound());
-
-    group.MapPost("", async (BibliotecaDbContext db, IValidator<AutorCreateDto> validator, AutorCreateDto dto) =>
-    {
-        var vr = await validator.ValidateAsync(dto);
-        if (!vr.IsValid) return Results.ValidationProblem(vr.ToDictionary());
-
-        // verificar FK idioma
-        var idiomaExists = await db.Idiomas.AnyAsync(i => i.Id == dto.IdiomaNativoId && i.Estado);
-        if (!idiomaExists) return Results.BadRequest(new { error = "IdiomaNativoId inválido" });
-
-        var entity = new Autor
-        {
-            Nombre = dto.Nombre,
-            PaisOrigen = dto.PaisOrigen,
-            IdiomaNativoId = dto.IdiomaNativoId,
-            Estado = dto.Estado
-        };
-
-        db.Autores.Add(entity);
-        await db.SaveChangesAsync();
-        return Results.Created($"/api/autores/{entity.Id}", entity);
-    });
-
-    group.MapPut("{id:int}", async (BibliotecaDbContext db, IValidator<AutorUpdateDto> validator, int id, AutorUpdateDto dto) =>
-    {
-        var vr = await validator.ValidateAsync(dto);
-        if (!vr.IsValid) return Results.ValidationProblem(vr.ToDictionary());
-
-        var entity = await db.Autores.FindAsync(id);
-        if (entity is null) return Results.NotFound();
-
-        if (!await db.Idiomas.AnyAsync(i => i.Id == dto.IdiomaNativoId && i.Estado))
-            return Results.BadRequest(new { error = "IdiomaNativoId inválido" });
-
-        entity.Nombre = dto.Nombre;
-        entity.PaisOrigen = dto.PaisOrigen;
-        entity.IdiomaNativoId = dto.IdiomaNativoId;
-        entity.Estado = dto.Estado;
-        entity.ActualizadoEn = DateTime.UtcNow;
-
-        await db.SaveChangesAsync();
-        return Results.NoContent();
-    });
-
-    // Soft delete
-    group.MapDelete("{id:int}", async (BibliotecaDbContext db, int id) =>
-    {
-        var entity = await db.Autores.FindAsync(id);
-        if (entity is null) return Results.NotFound();
-        entity.Estado = false;
-        entity.ActualizadoEn = DateTime.UtcNow;
-        await db.SaveChangesAsync();
-        return Results.NoContent();
-    });
-}
 
 // ========== LIBROS ==========
 {
