@@ -1,16 +1,35 @@
-/* ---------- solo para la vista Detalle ---------- */
-.editarForm p {
-  margin: 0;
-  padding: 0.4rem 0.6rem;
-  background: #f3f4f6;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  color: #111827;
+/* ==========================================================
+   ESTILOS ADAPTADOS DEL USUARIO → aplicados al Detalle
+   Compatibles con el sistema actual (.details-box, etc.)
+========================================================== */
+
+/* Contenedor principal del detalle */
+.details-box.editarForm {
+
+
+  gap: 1rem;
 }
 
-.editarForm label {
+/* Cada elemento del detalle */
+.details-item.editarForm-item {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: .75rem;
+}
+
+/* Etiquetas (adaptando tu color y peso) */
+.details-item.editarForm-item .details-label {
   font-weight: 600;
-  font-size: 0.875rem;
-  color: #374151;
+  font-size: 0.875rem;       /* tomado del usuario */
+  color: #0745a9;            /* color solicitado */
   margin-bottom: 0.25rem;
+}
+
+/* Valores (adaptado del estilo original + tu padding y fondo) */
+.details-item.editarForm-item .details-value {
+  margin: 0;
+  padding: 0.4rem 0.6rem;     /* tomado del usuario */
+  background: #f3f4f6;        /* tomado del usuario */
+  border-radius: 4px;         /* tomado del usuario */
+  font-size: 0.95rem;         /* tomado del usuario */
+  color: #111827;
 }

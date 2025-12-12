@@ -31,7 +31,7 @@ public class Libro
     // Navegación
     public TipoBibliografia TipoBibliografia { get; set; } = default!;
     public Editora Editora { get; set; } = default!;
-    public Ciencia Ciencia { get; set; } = default!;
+    public Ciencia? Ciencia { get; set; } = default!;
     public Idioma Idioma { get; set; } = default!;
     public ICollection<Autor> Autores { get; set; } = new List<Autor>();
 }

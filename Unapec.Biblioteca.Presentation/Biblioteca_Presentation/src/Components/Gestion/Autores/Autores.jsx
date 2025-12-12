@@ -7,19 +7,19 @@ import api from '../../../Services/api';
 import './Autores.css';
 
 const Autores = () => {
-  const [biblios, setBiblios] = useState([]);
+  const [autores, setAutores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState(''); // '' todos | 'true' activos | 'false' inactivos
 
   useEffect(() => {
     const params = filtro === '' ? {} : { estado: filtro };
     api.get('/api/autores', { params })
-      .then(res => { setBiblios(res.data.items); setLoading(false); })
+      .then(res => { setAutores(res.data.items); setLoading(false); })
       .catch(() => setLoading(false));
   }, [filtro]);
 
   if (loading) return <p>Cargando autores</p>;
-
+  console.log(autores);
   return (
         <div className='autores-container'>
           {/* Contenedor único: misma columna que la lista */}
@@ -47,12 +47,13 @@ const Autores = () => {
 
             {/* Fila 2: lista */}
             <div className='list-container'>
-              {biblios.map(b => (
+              {autores.map(a => (
                 <ItemList
-                  key={b.id}
-                  item={b}
+                  key={a.id}
+                  item={a}
                   icon={<FaBook className='list-icon' />}
                   recurso='autores'
+                  displayField='nombre'  // 👈 Agregamos esto
                 />
               ))}
             </div>

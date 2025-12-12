@@ -1,18 +1,21 @@
-// src/components/Crud/ConfirmModal.jsx
 import './ConfirmModal.css';
 
-const ConfirmModal = ({ show, title, children, onConfirm, onCancel }) => {
-  if (!show) return null;
+const ConfirmModal = ({ open, onClose, onConfirm, message }) => {
+  if (!open) return null;
 
   return (
-    <div className='modal-overlay'>
-      <div className='modal-box'>
-        <h3>{title}</h3>
-        <div className='modal-body'>{children}</div>
+    <div className="modal-overlay">
+      <div className="modal-box">
+        <p className="modal-message">{message}</p>
 
-        <div className='modal-actions'>
-          <button className='btn-confirm' onClick={onConfirm}>Eliminar</button>
-          <button className='btn-cancel' onClick={onCancel}>Cancelar</button>
+        <div className="modal-buttons">
+          <button className="btn-cancel" onClick={onClose}>
+            Cancelar
+          </button>
+
+          <button className="btn-confirm" onClick={onConfirm}>
+            Confirmar
+          </button>
         </div>
       </div>
     </div>

@@ -242,7 +242,7 @@ MapCatalog<Idioma>("idiomas");
 {
     var group = app.MapGroup("/api/libros").WithTags("libros");
 
-    group.MapGet("", (BibliotecaDbContext db, int page = 1, int pageSize = 20, string? q = null) =>
+    group.MapGet("", (BibliotecaDbContext db, int page = 1, int pageSize = 20, string? q = null, bool? estado = null) =>
     {
         var query = db.Set<Libro>()
             .Include(l => l.TipoBibliografia)
@@ -254,6 +254,9 @@ MapCatalog<Idioma>("idiomas");
 
         if (!string.IsNullOrWhiteSpace(q))
             query = query.Where(l => l.Descripcion.Contains(q) || (l.ISBN != null && l.ISBN.Contains(q)));
+
+        if (estado.HasValue)
+            query = query.Where(l => l.Estado == estado);
 
         return Results.Ok(new
         {
@@ -368,19 +371,36 @@ MapCatalog<Idioma>("idiomas");
         await db.SaveChangesAsync();
         return Results.NoContent();
     });
+} //  Cerrar el scope de libros aquí
 
-    // ======= CRUD EMPLEADOS =======
-    var empleados = app.MapGroup("/api/empleados").WithTags("empleados");
+// ======= CRUD EMPLEADOS =======
+{
+    var group = app.MapGroup("/api/empleados").WithTags("empleados");
 
-    // Listar
-    empleados.MapGet("", (BibliotecaDbContext db) => Results.Ok(db.Empleados.ToList()));
+    // Listar con paginación
+    group.MapGet("", (BibliotecaDbContext db, int page = 1, int pageSize = 20, bool? estado = null) =>
+    {
+        var query = db.Empleados.AsQueryable();
+        if (estado.HasValue) query = query.Where(e => e.Estado == estado);
+
+        return Results.Ok(new
+        {
+            page,
+            pageSize,
+            total = query.Count(),
+            items = query.OrderBy(e => e.Nombre)
+                         .Skip((page - 1) * pageSize)
+                         .Take(pageSize)
+                         .ToList()
+        });
+    });
 
     // Obtener por ID
-    empleados.MapGet("{id:int}", async (BibliotecaDbContext db, int id) =>
+    group.MapGet("{id:int}", async (BibliotecaDbContext db, int id) =>
         await db.Empleados.FindAsync(id) is { } e ? Results.Ok(e) : Results.NotFound());
 
     // Crear
-    empleados.MapPost("", async (BibliotecaDbContext db, IValidator<EmpleadoCreateDto> validator, EmpleadoCreateDto dto) =>
+    group.MapPost("", async (BibliotecaDbContext db, IValidator<EmpleadoCreateDto> validator, EmpleadoCreateDto dto) =>
     {
         var vr = await validator.ValidateAsync(dto);
         if (!vr.IsValid) return Results.ValidationProblem(vr.ToDictionary());
@@ -401,7 +421,7 @@ MapCatalog<Idioma>("idiomas");
     });
 
     // Actualizar
-    empleados.MapPut("{id:int}", async (BibliotecaDbContext db, IValidator<EmpleadoUpdateDto> validator, int id, EmpleadoUpdateDto dto) =>
+    group.MapPut("{id:int}", async (BibliotecaDbContext db, IValidator<EmpleadoUpdateDto> validator, int id, EmpleadoUpdateDto dto) =>
     {
         var vr = await validator.ValidateAsync(dto);
         if (!vr.IsValid) return Results.ValidationProblem(vr.ToDictionary());
@@ -421,7 +441,7 @@ MapCatalog<Idioma>("idiomas");
     });
 
     // Eliminar lógico
-    empleados.MapDelete("{id:int}", async (BibliotecaDbContext db, int id) =>
+    group.MapDelete("{id:int}", async (BibliotecaDbContext db, int id) =>
     {
         var empleado = await db.Empleados.FindAsync(id);
         if (empleado is null) return Results.NotFound();
@@ -430,19 +450,26 @@ MapCatalog<Idioma>("idiomas");
         await db.SaveChangesAsync();
         return Results.NoContent();
     });
+}
 
-    // ======= CRUD USUARIOS =======
-    var usuarios = app.MapGroup("/api/usuarios").WithTags("usuarios");
+// ======= CRUD USUARIOS =======
+{
+    var group = app.MapGroup("/api/usuarios").WithTags("usuarios");
 
-    // Listar
-    usuarios.MapGet("", (BibliotecaDbContext db) => Results.Ok(db.Usuarios.ToList()));
+    // Listar sin paginación (como está ahora)
+    group.MapGet("", (BibliotecaDbContext db, bool? estado = null) =>
+    {
+        var query = db.Usuarios.AsQueryable();
+        if (estado.HasValue) query = query.Where(u => u.Estado == estado);
+        return Results.Ok(query.OrderBy(u => u.Nombre).ToList());
+    });
 
     // Obtener por ID
-    usuarios.MapGet("{id:int}", async (BibliotecaDbContext db, int id) =>
+    group.MapGet("{id:int}", async (BibliotecaDbContext db, int id) =>
         await db.Usuarios.FindAsync(id) is { } u ? Results.Ok(u) : Results.NotFound());
 
     // Crear
-    usuarios.MapPost("", async (BibliotecaDbContext db, IValidator<UsuarioCreateDto> validator, UsuarioCreateDto dto) =>
+    group.MapPost("", async (BibliotecaDbContext db, IValidator<UsuarioCreateDto> validator, UsuarioCreateDto dto) =>
     {
         var vr = await validator.ValidateAsync(dto);
         if (!vr.IsValid) return Results.ValidationProblem(vr.ToDictionary());
@@ -462,7 +489,7 @@ MapCatalog<Idioma>("idiomas");
     });
 
     // Actualizar
-    usuarios.MapPut("{id:int}", async (BibliotecaDbContext db, IValidator<UsuarioUpdateDto> validator, int id, UsuarioUpdateDto dto) =>
+    group.MapPut("{id:int}", async (BibliotecaDbContext db, IValidator<UsuarioUpdateDto> validator, int id, UsuarioUpdateDto dto) =>
     {
         var vr = await validator.ValidateAsync(dto);
         if (!vr.IsValid) return Results.ValidationProblem(vr.ToDictionary());
@@ -481,7 +508,7 @@ MapCatalog<Idioma>("idiomas");
     });
 
     // Eliminar lógico
-    usuarios.MapDelete("{id:int}", async (BibliotecaDbContext db, int id) =>
+    group.MapDelete("{id:int}", async (BibliotecaDbContext db, int id) =>
     {
         var usuario = await db.Usuarios.FindAsync(id);
         if (usuario is null) return Results.NotFound();
@@ -490,8 +517,6 @@ MapCatalog<Idioma>("idiomas");
         await db.SaveChangesAsync();
         return Results.NoContent();
     });
-
-
 }
 
 app.Run();

@@ -55,3 +55,35 @@
   border-radius: .5rem;
   overflow: hidden;
 }
+
+/* Contenedor que envuelve cada ItemList + botón. No cambia el layout interno de ItemList */
+.list-item-with-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;          /* espacio pequeño entre item y botón */
+  padding-right: 0.5rem;/* espacio para el botón al final */
+}
+
+/* Botón minimalista y consistente con el resto del diseño */
+.btn-inline-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: none;
+  background: transparent; /* transparente por defecto para no chocar con estilos */
+  color: #ef4444;          /* rojo suave */
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+/* Hover sutil sin romper estilos */
+.btn-inline-delete:hover {
+  background: rgba(239,68,68,0.08);
+}
+
+/* Si quieres que el botón sea menos visible en pantallas pequeñas */
+@media (max-width: 640px) {
+  .btn-inline-delete { padding: 0.25rem; font-size: 0.85rem; }
+}

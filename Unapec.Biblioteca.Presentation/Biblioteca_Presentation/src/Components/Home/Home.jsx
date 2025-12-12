@@ -7,11 +7,11 @@ const Home = () => (
     <article className="home__sub">Sistema de gestión de bibliotecas</article>
 
     <div className="home__grid">
-      {/* ---- Bibliografías ---- */}
+      {/* ---- Tipos de Bibliografía ---- */}
       <Link to="/tipos-bibliografia" className="home__card">
         <span className="home__ico">📚</span>
-        <span className="home__name">Bibliografías</span>
-        <span className="home__desc">Administra autores, títulos y ediciones.</span>
+        <span className="home__name">Tipos de Bibliografía</span>
+        <span className="home__desc">Administra tipos de bibliografía.</span>
       </Link>
 
       {/* ---- Editoras ---- */}
@@ -35,28 +35,32 @@ const Home = () => (
         <span className="home__desc">Controla traducciones e idiomas disponibles.</span>
       </Link>
 
-      <Link to="/Autores" className="home__card">
+      {/* ---- Autores ---- */}
+      <Link to="/autores" className="home__card">
         <span className="home__ico">✍🏻</span>
         <span className="home__name">Autores</span>
-        <span className="home__desc">Gestiona los autores disponibles</span>
+        <span className="home__desc">Gestiona los autores disponibles.</span>
       </Link>
 
-      <Link to="/Usuarios" className="home__card">
+      {/* ---- Usuarios ---- */}
+      <Link to="/usuarios" className="home__card">
         <span className="home__ico">👨🏻‍💻</span>
         <span className="home__name">Usuarios</span>
-        <span className="home__desc">Gestiona los usuarios disponibles</span>
+        <span className="home__desc">Gestiona los usuarios del sistema.</span>
       </Link>
 
-      <Link to="/Libros" className="home__card">
-        <span className="home__ico">📚</span>
+      {/* ---- Libros ---- */}
+      <Link to="/libros" className="home__card">
+        <span className="home__ico">📖</span>
         <span className="home__name">Libros</span>
-        <span className="home__desc">Gestiona los libros disponibles</span>
+        <span className="home__desc">Gestiona el catálogo de libros.</span>
       </Link>
 
-      <Link to="/Empleados" className="home__card">
-        <span className="home__ico">📚</span>
+      {/* ---- Empleados ---- */}
+      <Link to="/empleados" className="home__card">
+        <span className="home__ico">👔</span>
         <span className="home__name">Empleados</span>
-        <span className="home__desc">Gestiona los Empleados disponibles</span>
+        <span className="home__desc">Gestiona el personal de la biblioteca.</span>
       </Link>
     </div>
   </section>
