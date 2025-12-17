@@ -1,5 +1,5 @@
 // src/components/Gestion/Ciencias/Ciencias.jsx
-import { FaFlask, FaPlus } from 'react-icons/fa';
+import { FaFlask, FaPlus, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ItemList from '../../Crud/Item';
@@ -11,7 +11,7 @@ const Ciencias = () => {
   const [ciencias, setCiencias] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState('');
-
+  const [busqueda, setBusqueda] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [idEliminar, setIdEliminar] = useState(null);
 
@@ -19,7 +19,13 @@ const Ciencias = () => {
   const cargarCiencias = () => {
     setLoading(true);
 
-    const params = filtro === '' ? {} : { estado: filtro };
+    const params = {
+      page: 1,
+      pageSize: 100
+    };
+    
+    if (filtro !== '') params.estado = filtro;
+    if (busqueda.trim() !== '') params.q = busqueda.trim();
 
     api.get('/api/ciencias', { params })
       .then(res => { 
@@ -33,8 +39,13 @@ const Ciencias = () => {
   };
 
   useEffect(() => {
-    cargarCiencias();
-  }, [filtro]);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      cargarCiencias();
+    }, 500); // Debounce de 500ms
+
+    return () => clearTimeout(timer);
+  }, [filtro, busqueda]);
 
   // 🟢 Pedir confirmación antes de eliminar
   const pedirConfirmarEliminacion = (id) => {
@@ -54,8 +65,6 @@ const Ciencias = () => {
     setModalOpen(false);
   };
 
-  if (loading) return <p>Cargando ciencias…</p>;
-
   return (
     <div className='ciencias-container'>
       <div className='shared-wrapper'>
@@ -65,6 +74,17 @@ const Ciencias = () => {
           <h2 className='header-title'>Ciencias</h2>
 
           <div className='header-controls'>
+            <div className='search-box'>
+              <FaSearch className='search-icon' />
+              <input
+                type='text'
+                placeholder='Buscar...'
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                className='search-input'
+              />
+            </div>
+
             <select
               value={filtro}
               onChange={e => setFiltro(e.target.value)}
@@ -83,7 +103,9 @@ const Ciencias = () => {
 
         {/* Lista */}
         <div className='list-container'>
-          {ciencias.length === 0 ? (
+          {loading ? (
+            <p style={{ padding: "1rem" }}>Cargando...</p>
+          ) : ciencias.length === 0 ? (
             <p style={{ padding: "1rem" }}>No hay ciencias registradas.</p>
           ) : (
             ciencias.map(c => (
@@ -93,7 +115,7 @@ const Ciencias = () => {
                 icon={<FaFlask className='list-icon' />}
                 recurso='ciencias'
                 displayField='descripcion'
-                onDelete={() => pedirConfirmarEliminacion(c.id)}  // 👉 AHORA SÍ TIENE EL BOTÓN
+                onDelete={() => pedirConfirmarEliminacion(c.id)}
               />
             ))
           )}

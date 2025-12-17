@@ -62,6 +62,12 @@ const Home = () => (
         <span className="home__name">Empleados</span>
         <span className="home__desc">Gestiona el personal de la biblioteca.</span>
       </Link>
+
+          <Link to="/prestamos" className="home__card">
+        <span className="home__ico">⏳</span>
+        <span className="home__name">Préstamos</span>
+        <span className="home__desc">Registra y gestiona préstamos de libros.</span>
+      </Link>
     </div>
   </section>
 );

@@ -1,61 +1,76 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import api from "../../../Services/api";
-import "../Libros/DetalleGenerico.css";
+// src/components/Gestion/Prestamos/PrestamosDetails.jsx
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../../Services/api';
+import '../Libros/DetalleGenerico.css';
 
-const UsuariosDetalle = () => {
+const PrestamosDetails = () => {
   const { id } = useParams();
-  const [usuario, setUsuario] = useState(null);
+  const navigate = useNavigate();
+
+  const [prestamo, setPrestamo] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const cargarDetalle = async () => {
-    try {
-      const res = await api.get(`/api/usuarios/${id}`);
-      setUsuario(res.data);
-    } catch (error) {
-      console.error("Error cargando detalle del usuario:", error);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
-    cargarDetalle();
+    api.get(`/api/prestamos/${id}`)
+      .then(res => setPrestamo(res.data))
+      .catch(() => setPrestamo(null))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <p className="detalle-loading">Cargando detalle…</p>;
-  if (!usuario) return <p className="detalle-error">No se encontró el usuario.</p>;
+  if (loading) return <p className="detalle-loading">Cargando detalles del préstamo…</p>;
+  if (!prestamo) return <p className="detalle-error">No se encontró el préstamo.</p>;
+
+  // Formatear fecha con protección contra null
+  const formatDate = (dateString) => {
+    return dateString ? new Date(dateString).toLocaleString() : "—";
+  };
 
   return (
-    <div className="detalle-wrapper">
-      <div className="detalle-header">
-        <h2 className="detalle-titulo">{usuario.nombre}</h2>
+    <div className='detalle-wrapper'>
+      <div className='detalle-header'>
+        <h2 className='detalle-titulo'>Detalles del Préstamo</h2>
 
-        <div className="detalle-buttons">
-          <Link to={`/usuarios/editar/${usuario.id}`} className="btn-action btn-edit">
-            Editar
-          </Link>
-          <Link to={`/usuarios`} className="btn-action btn-back">
+        <div className='detalle-buttons'>
+          {!prestamo.devuelto && (
+            <button
+              className='btn-action btn-edit'
+              onClick={() => navigate(`/prestamos/editar/${id}`)}
+            >
+              Editar
+            </button>
+          )}
+          <button
+            className='btn-action btn-back'
+            onClick={() => navigate('/prestamos')}
+          >
             Volver
-          </Link>
+          </button>
         </div>
       </div>
 
-      <div className="detalle-box">
-        <h3 className="detalle-subtitulo">Información general</h3>
-
+      <div className='detalle-box'>
         <div className="detalle-grid">
-          <div><strong>Cédula:</strong> {usuario.cedula}</div>
-          <div><strong>No. Carnet:</strong> {usuario.noCarnet}</div>
-          <div><strong>Tipo de Persona:</strong> {usuario.tipoPersona}</div>
-          <div><strong>Estado:</strong> {usuario.estado ? "Activo" : "Inactivo"}</div>
-          <div><strong>Creado en:</strong> {usuario.creadoEn?.split("T")[0]}</div>
-          {usuario.actualizadoEn && (
-            <div><strong>Actualizado en:</strong> {usuario.actualizadoEn.split("T")[0]}</div>
-          )}
+          <p><strong>ID:</strong> {prestamo.id}</p>
+          <p><strong>Estado:</strong> {prestamo.devuelto ? "Devuelto" : "Pendiente"}</p>
+          
+          <p><strong>Usuario:</strong> {prestamo.usuario?.nombre || `ID: ${prestamo.usuarioId}`}</p>
+          <p><strong>No. Carnet:</strong> {prestamo.usuario?.noCarnet || "—"}</p>
+          <p><strong>Cédula:</strong> {prestamo.usuario?.cedula || "—"}</p>
+
+          <p><strong>Libro:</strong> {prestamo.libro?.descripcion || `ID: ${prestamo.libroId}`}</p>
+          <p><strong>ISBN:</strong> {prestamo.libro?.isbn || "—"}</p>
+          <p><strong>Signatura Topográfica:</strong> {prestamo.libro?.signaturaTopografica || "—"}</p>
+
+          <p><strong>Fecha de Préstamo:</strong> {formatDate(prestamo.fechaPrestamo)}</p>
+          <p><strong>Fecha de Devolución:</strong> {formatDate(prestamo.fechaDevolucion)}</p>
+          
+          <p><strong>Creado:</strong> {formatDate(prestamo.creadoEn)}</p>
+          <p><strong>Actualizado:</strong> {formatDate(prestamo.actualizadoEn)}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default UsuariosDetalle;
+export default PrestamosDetails;

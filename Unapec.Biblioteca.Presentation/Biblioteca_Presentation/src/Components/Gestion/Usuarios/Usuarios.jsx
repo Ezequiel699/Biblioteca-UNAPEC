@@ -1,5 +1,5 @@
 // src/components/Gestion/Usuarios/Usuarios.jsx
-import { FaUser, FaPlus } from 'react-icons/fa';
+import { FaUser, FaPlus, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ItemList from '../../Crud/Item';
@@ -11,13 +11,20 @@ const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState('');
+  const [busqueda, setBusqueda] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [idEliminar, setIdEliminar] = useState(null);
 
   const cargarUsuarios = () => {
     setLoading(true);
 
-    const params = filtro === '' ? {} : { estado: filtro };
+    const params = {
+      page: 1,
+      pageSize: 100
+    };
+    
+    if (filtro !== '') params.estado = filtro;
+    if (busqueda.trim() !== '') params.q = busqueda.trim();
 
     api.get('/api/usuarios', { params })
       .then(res => { 
@@ -31,8 +38,13 @@ const Usuarios = () => {
   };
 
   useEffect(() => {
-    cargarUsuarios();
-  }, [filtro]);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      cargarUsuarios();
+    }, 500); // Debounce de 500ms
+
+    return () => clearTimeout(timer);
+  }, [filtro, busqueda]);
 
   // 🟢 Abrir modal y guardar el ID
   const pedirConfirmarEliminacion = (id) => {
@@ -52,8 +64,6 @@ const Usuarios = () => {
     setModalOpen(false);
   };
 
-  if (loading) return <p>Cargando usuarios…</p>;
-
   return (
     <div className='usuarios-container'>
       <div className='shared-wrapper'>
@@ -63,6 +73,17 @@ const Usuarios = () => {
           <h2 className='header-title'>Usuarios</h2>
 
           <div className='header-controls'>
+            <div className='search-box'>
+              <FaSearch className='search-icon' />
+              <input
+                type='text'
+                placeholder='Buscar...'
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                className='search-input'
+              />
+            </div>
+
             <select
               value={filtro}
               onChange={e => setFiltro(e.target.value)}
@@ -81,7 +102,9 @@ const Usuarios = () => {
 
         {/* Lista */}
         <div className='list-container'>
-          {usuarios.length === 0 ? (
+          {loading ? (
+            <p style={{ padding: "1rem" }}>Cargando...</p>
+          ) : usuarios.length === 0 ? (
             <p style={{ padding: "1rem" }}>No hay usuarios registrados.</p>
           ) : (
             usuarios.map(usuario => (

@@ -16,7 +16,7 @@ const AutoresAdd = () => {
   });
 
   useEffect(() => {
-    api.get('/api/idiomas')
+    api.get('/api/idiomas?page=1&pageSize=100&estado=true')
       .then(res => setIdiomas(res.data.items || []))
       .catch(console.error);
   }, []);

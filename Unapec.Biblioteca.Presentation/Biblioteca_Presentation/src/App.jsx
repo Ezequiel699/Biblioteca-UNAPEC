@@ -37,6 +37,10 @@ import UsuariosDetalle from './Components/Gestion/Usuarios/UsuariosDetalle'
 import EmpleadosAdd from './Components/Gestion/Empleados/EmpleadosAdd'
 import EmpleadosEditar from './Components/Gestion/Empleados/EmpleadosEdit'
 import EmpleadosDetalle from './Components/Gestion/Empleados/EmpleadosDetalle'
+import Prestamos from './Components/Gestion/Prestamos/Prestamos'
+import PrestamosAdd from './Components/Gestion/Prestamos/PrestamosAdd'
+import PrestamosEdit from './Components/Gestion/Prestamos/PrestamosEdit'
+import PrestamosDetails from './Components/Gestion/Usuarios/UsuariosDetalle'
 
 
 function App() {
@@ -95,7 +99,17 @@ function App() {
           <Route path="/empleados/nuevo" element={<EmpleadosAdd />} />
           <Route path="/empleados/editar/:id" element={<EmpleadosEditar />} />
           <Route path="/empleados/detalle/:id" element={<EmpleadosDetalle />} />
+                  {/* Empleados */}
+          <Route path="/prestamos" element={<Prestamos />} />
+          <Route path="/prestamos/nuevo" element={<PrestamosAdd />} />
+          <Route path="/prestamos/editar/:id" element={<PrestamosEdit />} />
+          <Route path="/prestamos/detalle/:id" element={<PrestamosDetails />} />
+
+        
         </Routes>
+
+        
+        
       </div>
     </BrowserRouter>
   )

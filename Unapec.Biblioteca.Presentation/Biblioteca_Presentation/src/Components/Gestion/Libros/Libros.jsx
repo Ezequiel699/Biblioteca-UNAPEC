@@ -1,4 +1,5 @@
-import { FaBookOpen, FaPlus } from 'react-icons/fa';
+// src/components/Gestion/Libros/Libros.jsx
+import { FaBookOpen, FaPlus, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ItemList from '../../Crud/Item';
@@ -10,13 +11,20 @@ const Libros = () => {
   const [libros, setLibros] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState('');
+  const [busqueda, setBusqueda] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [idEliminar, setIdEliminar] = useState(null);
 
   const cargarLibros = () => {
     setLoading(true);
 
-    const params = filtro === '' ? {} : { estado: filtro };
+    const params = {
+      page: 1,
+      pageSize: 100
+    };
+    
+    if (filtro !== '') params.estado = filtro;
+    if (busqueda.trim() !== '') params.q = busqueda.trim();
 
     api.get('/api/libros', { params })
       .then(res => { 
@@ -30,8 +38,13 @@ const Libros = () => {
   };
 
   useEffect(() => {
-    cargarLibros();
-  }, [filtro]);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      cargarLibros();
+    }, 500); // Debounce de 500ms
+
+    return () => clearTimeout(timer);
+  }, [filtro, busqueda]);
 
   // 🟢 Abrir modal y guardar el ID
   const pedirConfirmarEliminacion = (id) => {
@@ -51,8 +64,6 @@ const Libros = () => {
     setModalOpen(false);
   };
 
-  if (loading) return <p>Cargando libros…</p>;
-
   return (
     <div className='libros-container'>
       <div className='shared-wrapper'>
@@ -62,6 +73,17 @@ const Libros = () => {
           <h2 className='header-title'>Libros</h2>
 
           <div className='header-controls'>
+            <div className='search-box'>
+              <FaSearch className='search-icon' />
+              <input
+                type='text'
+                placeholder='Buscar...'
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                className='search-input'
+              />
+            </div>
+
             <select
               value={filtro}
               onChange={e => setFiltro(e.target.value)}
@@ -80,7 +102,9 @@ const Libros = () => {
 
         {/* Lista */}
         <div className='list-container'>
-          {libros.length === 0 ? (
+          {loading ? (
+            <p style={{ padding: "1rem" }}>Cargando...</p>
+          ) : libros.length === 0 ? (
             <p style={{ padding: "1rem" }}>No hay libros registrados.</p>
           ) : (
             libros.map(libro => (
@@ -90,7 +114,7 @@ const Libros = () => {
                 icon={<FaBookOpen className='list-icon' />}
                 recurso='libros'
                 displayField='descripcion'
-                onDelete={() => pedirConfirmarEliminacion(libro.id)}  // 👈 añade el botón eliminar
+                onDelete={() => pedirConfirmarEliminacion(libro.id)}
               />
             ))
           )}
